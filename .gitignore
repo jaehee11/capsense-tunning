@@ -1,0 +1,24 @@
+# ignore All
+/*
+!.gitignore
+
+# exception .c .h .cydwr .cyprj
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn
+/CapSense_CSD_P4_Example_WithTuner01.cydsn/*
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/*.c
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/*.s
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/*.h
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/*.cydwr
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/*.cyprj
+
+# exception .cysch
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/TopDesign
+/CapSense_CSD_P4_Example_WithTuner01.cydsn/TopDesign/*
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/TopDesign/*.cysch
+
+#exception .hex
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/CortexM0
+/CapSense_CSD_P4_Example_WithTuner01.cydsn/CortexM0/*
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/CortexM0/ARM_GCC_541
+/CapSense_CSD_P4_Example_WithTuner01.cydsn/CortexM0/ARM_GCC_541/Debug/*
+!/CapSense_CSD_P4_Example_WithTuner01.cydsn/CortexM0/ARM_GCC_541/Debug/*.hex
