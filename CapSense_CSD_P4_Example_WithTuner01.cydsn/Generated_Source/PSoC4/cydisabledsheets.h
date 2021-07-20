@@ -1,0 +1,6 @@
+#ifndef INCLUDED_CYDISABLEDSHEETS_H
+#define INCLUDED_CYDISABLEDSHEETS_H
+
+#define Active_mode__DISABLED 1u /* Active mode */
+
+#endif /* INCLUDED_CYDISABLEDSHEETS_H */

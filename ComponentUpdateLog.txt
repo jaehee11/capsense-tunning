@@ -1,0 +1,17 @@
+Last Modified Date & Time: 03/20/2019 20:26:33
+
+CapSense_CSD_P4_Example_WithTuner01: CapSense_CSD_P4_Example_WithTuner01.cydwr
+	cy_boot [v5.0] to [v5.60]
+	cy_lfclk [v1.0] to [v1.20]
+	LIN_Dynamic [v3.20] to [v4.0]
+
+CapSense_CSD_P4_Example_WithTuner01: TopDesign.cysch
+	CapSense [v2.20] to [v2.60]
+	GlobalSignal [v2.0] to [v2.10]
+	hawkeye_clk [v2.10] to [v2.20]
+	hawkeye_data [v2.10] to [v2.20]
+	Pin_Power [v2.10] to [v2.20]
+	EZI2C [v3.0] to [v4.0]
+	I2CS [v3.0] to [v4.0]
+
+

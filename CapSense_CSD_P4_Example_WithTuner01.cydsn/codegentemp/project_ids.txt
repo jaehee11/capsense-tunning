@@ -1,0 +1,7 @@
+C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\CapSense_CSD_P4_Example_WithTuner01.cyprj|ce1061e7-b94f-4ea3-a228-e4aa689a5681
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|54333514-7eb9-498f-96ae-4890637e9c33
+C:\Users\young\OneDrive\문서\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|5583077c-d1ee-4bd3-b266-5cc4e579e2b0
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|156c85dc-b1eb-4ff1-a43a-433097df475c
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|eaeb58e9-75ff-4b35-9367-7635f8a86508
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|f5d8ff9d-9a1a-4533-8043-73cb0af75f64
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyReferenceLibrary\CyReferenceLibrary.cylib\CyReferenceLibrary.cyprj|321a88c6-1c6b-4835-80e0-0e9c6a9f3762

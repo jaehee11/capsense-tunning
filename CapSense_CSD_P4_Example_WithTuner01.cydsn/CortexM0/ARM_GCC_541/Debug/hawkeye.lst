@@ -1,0 +1,2947 @@
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 2
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"hawkeye.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.report_debug_data,"ax",%progbits
+  20              		.align	2
+  21              		.global	report_debug_data
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	report_debug_data, %function
+  25              	report_debug_data:
+  26              	.LFB34:
+  27              		.file 1 "hawkeye.c"
+   1:hawkeye.c     **** /* ========================================
+   2:hawkeye.c     ****  *
+   3:hawkeye.c     ****  * Copyright YOUR COMPANY, THE YEAR
+   4:hawkeye.c     ****  * All Rights Reserved
+   5:hawkeye.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:hawkeye.c     ****  *
+   7:hawkeye.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:hawkeye.c     ****  * WHICH IS THE PROPERTY OF your company.
+   9:hawkeye.c     ****  *
+  10:hawkeye.c     ****  * ========================================
+  11:hawkeye.c     **** */
+  12:hawkeye.c     **** 
+  13:hawkeye.c     **** /*----------------------------------------------------------------------------
+  14:hawkeye.c     ****                                 include files
+  15:hawkeye.c     **** ----------------------------------------------------------------------------*/
+  16:hawkeye.c     **** 
+  17:hawkeye.c     **** /*----------------------------------------------------------------------------
+  18:hawkeye.c     ****                                 include files
+  19:hawkeye.c     **** ----------------------------------------------------------------------------*/
+  20:hawkeye.c     **** //#include <device.h>
+  21:hawkeye.c     **** //#include <header.h>
+  22:hawkeye.c     **** #include <project.h>
+  23:hawkeye.c     **** 
+  24:hawkeye.c     **** /*----------------------------------------------------------------------------
+  25:hawkeye.c     ****                                 macro
+  26:hawkeye.c     **** ----------------------------------------------------------------------------*/
+  27:hawkeye.c     **** /**
+  28:hawkeye.c     ****   * Utility macro for expanding port registers.
+  29:hawkeye.c     ****   */
+  30:hawkeye.c     **** #define JOIN( x, y ) x ## y
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 2
+
+
+  31:hawkeye.c     **** #define JOIN1( A, B, C ) A ## B ## C
+  32:hawkeye.c     **** 
+  33:hawkeye.c     **** /**
+  34:hawkeye.c     ****   * Macro to build register writes for controlling ports. The intermediate
+  35:hawkeye.c     ****   * JOIN macro is required for correct expansion of the args.
+  36:hawkeye.c     ****   */
+  37:hawkeye.c     **** #define REG( REGISTER, SIDE ) JOIN( REGISTER, SIDE )
+  38:hawkeye.c     **** 
+  39:hawkeye.c     **** 
+  40:hawkeye.c     **** /*----------------------------------------------------------------------------
+  41:hawkeye.c     ****                                 prototypes
+  42:hawkeye.c     **** ----------------------------------------------------------------------------*/
+  43:hawkeye.c     **** void report_debug_data( void );
+  44:hawkeye.c     **** void init_debug_if( void );
+  45:hawkeye.c     **** 
+  46:hawkeye.c     **** static void output_to_debugger( uint8_t *p, uint8_t count );
+  47:hawkeye.c     **** static void send_debug_byte( uint8_t data );
+  48:hawkeye.c     **** 
+  49:hawkeye.c     **** //extern uint16 avg_signal[QT_NUM_CHANNELS];
+  50:hawkeye.c     **** 
+  51:hawkeye.c     **** //extern char noise_counter[63];
+  52:hawkeye.c     **** extern uint16 CapSense_SensorSignal[CapSense_TOTAL_SENSOR_COUNT];
+  53:hawkeye.c     **** extern uint16 CapSense_sensorRaw[CapSense_TOTAL_SENSOR_COUNT];
+  54:hawkeye.c     **** extern uint16 CapSense_sensorBaseline[CapSense_TOTAL_SENSOR_COUNT];
+  55:hawkeye.c     **** extern uint8 CapSense_sensorOnMask[(((CapSense_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)];
+  56:hawkeye.c     **** 
+  57:hawkeye.c     **** /*----------------------------------------------------------------------------
+  58:hawkeye.c     ****                             manifest constants
+  59:hawkeye.c     **** ----------------------------------------------------------------------------*/
+  60:hawkeye.c     **** 
+  61:hawkeye.c     **** 
+  62:hawkeye.c     **** /*============================================================================
+  63:hawkeye.c     **** Name    :   init_debug_if
+  64:hawkeye.c     **** ------------------------------------------------------------------------------
+  65:hawkeye.c     **** Purpose :   report debug data to host
+  66:hawkeye.c     **** Input   :   n/a
+  67:hawkeye.c     **** Output  :   n/a
+  68:hawkeye.c     **** Notes   :   n/a
+  69:hawkeye.c     **** ============================================================================*/
+  70:hawkeye.c     **** /*
+  71:hawkeye.c     **** void init_debug_if( void )
+  72:hawkeye.c     **** {
+  73:hawkeye.c     ****     // init port pins
+  74:hawkeye.c     ****     REG( DDR, DBG_DATA_PORT ) |= (1u << DBG_DATA_BIT );
+  75:hawkeye.c     ****     REG( DDR, DBG_CLK_PORT ) |= (1u << DBG_CLK_BIT );
+  76:hawkeye.c     **** }
+  77:hawkeye.c     **** */
+  78:hawkeye.c     **** /*============================================================================
+  79:hawkeye.c     **** Name    :   send_debug_byte
+  80:hawkeye.c     **** ------------------------------------------------------------------------------
+  81:hawkeye.c     **** Purpose :   transmit a byte over the debug interface
+  82:hawkeye.c     **** Input   :   data = byte to be transmitted
+  83:hawkeye.c     **** Output  :   n/a
+  84:hawkeye.c     **** Notes   :
+  85:hawkeye.c     **** ============================================================================*/
+  86:hawkeye.c     **** static void send_debug_byte( uint8_t data )
+  87:hawkeye.c     **** {
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 3
+
+
+  88:hawkeye.c     ****     // hawkeye_data_Write(1);
+  89:hawkeye.c     ****     // hawkeye_clk_Write(0);
+  90:hawkeye.c     ****     
+  91:hawkeye.c     ****     uint8 i;
+  92:hawkeye.c     **** 
+  93:hawkeye.c     ****     for( i = 0u; i < 8u; i++ )
+  94:hawkeye.c     ****     {
+  95:hawkeye.c     ****         /*  set data    */
+  96:hawkeye.c     ****         if( data & 0x80u )
+  97:hawkeye.c     ****         {
+  98:hawkeye.c     ****             hawkeye_data_Write(1);
+  99:hawkeye.c     ****         }
+ 100:hawkeye.c     ****         else
+ 101:hawkeye.c     ****         {
+ 102:hawkeye.c     ****             hawkeye_data_Write(0);
+ 103:hawkeye.c     ****         }
+ 104:hawkeye.c     **** 
+ 105:hawkeye.c     ****         /*  data set up time before clock pulse */
+ 106:hawkeye.c     ****         CyDelayCycles(1);
+ 107:hawkeye.c     **** 
+ 108:hawkeye.c     ****         /*  shift next bit up, ready for output */
+ 109:hawkeye.c     ****         data = (uint8_t)( data << 1u );
+ 110:hawkeye.c     **** 
+ 111:hawkeye.c     ****         /*  clock pulse */
+ 112:hawkeye.c     ****         hawkeye_clk_Write(1);
+ 113:hawkeye.c     **** 
+ 114:hawkeye.c     ****         CyDelayCycles(1);
+ 115:hawkeye.c     **** 
+ 116:hawkeye.c     ****         hawkeye_clk_Write(0);
+ 117:hawkeye.c     **** 
+ 118:hawkeye.c     ****         /*  delay before next bit   */
+ 119:hawkeye.c     ****         CyDelayCycles(1);
+ 120:hawkeye.c     ****     }
+ 121:hawkeye.c     **** 
+ 122:hawkeye.c     ****     /*  hold data low between bytes */
+ 123:hawkeye.c     ****         hawkeye_data_Write(0);
+ 124:hawkeye.c     **** 
+ 125:hawkeye.c     ****     /*  inter-byte delay    */
+ 126:hawkeye.c     ****         CyDelayCycles(2);
+ 127:hawkeye.c     **** }
+ 128:hawkeye.c     **** 
+ 129:hawkeye.c     **** /*============================================================================
+ 130:hawkeye.c     **** Name    :   output_to_debugger
+ 131:hawkeye.c     **** ------------------------------------------------------------------------------
+ 132:hawkeye.c     **** Purpose :   transmit multiple bytes over the debug interface
+ 133:hawkeye.c     **** Input   :   p = ptr to bytes to transmit
+ 134:hawkeye.c     ****             count = number of bytes to transmit
+ 135:hawkeye.c     **** Output  :   n/a
+ 136:hawkeye.c     **** Notes   :
+ 137:hawkeye.c     **** ============================================================================*/
+ 138:hawkeye.c     **** static void output_to_debugger( uint8_t *p, uint8_t count )
+ 139:hawkeye.c     **** {
+ 140:hawkeye.c     ****     uint8_t i;
+ 141:hawkeye.c     ****     uint8_t data;
+ 142:hawkeye.c     **** 
+ 143:hawkeye.c     ****     for( i = 0u; i < count; i++ )
+ 144:hawkeye.c     ****     {
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 4
+
+
+ 145:hawkeye.c     ****         /*  get next byte to transmit   */
+ 146:hawkeye.c     ****         data = *p;
+ 147:hawkeye.c     **** 
+ 148:hawkeye.c     ****         /*  transmit a byte over the debug interface    */
+ 149:hawkeye.c     ****         send_debug_byte( data );
+ 150:hawkeye.c     **** 
+ 151:hawkeye.c     ****         /*  point to next byte to transmit  */
+ 152:hawkeye.c     ****         p++;
+ 153:hawkeye.c     ****     }
+ 154:hawkeye.c     **** }
+ 155:hawkeye.c     **** 
+ 156:hawkeye.c     **** /*============================================================================
+ 157:hawkeye.c     **** Name    :   report_debug_data
+ 158:hawkeye.c     **** ------------------------------------------------------------------------------
+ 159:hawkeye.c     **** Purpose :   report debug data to host
+ 160:hawkeye.c     **** Input   :   n/a
+ 161:hawkeye.c     **** Output  :   n/a
+ 162:hawkeye.c     **** Notes   :   n/a
+ 163:hawkeye.c     **** ============================================================================*/
+ 164:hawkeye.c     **** static uint8_t frame_count;
+ 165:hawkeye.c     **** unsigned int temp[25];
+ 166:hawkeye.c     **** 
+ 167:hawkeye.c     **** extern uint16 Capsense_FilteredRawData[CapSense_TOTAL_SENSOR_COUNT];
+ 168:hawkeye.c     **** extern uint16 Sub_Buff[CapSense_TOTAL_SENSOR_COUNT];
+ 169:hawkeye.c     **** 
+ 170:hawkeye.c     **** void report_debug_data( void )
+ 171:hawkeye.c     **** {
+  28              		.loc 1 171 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  34              		.cfi_def_cfa_offset 20
+  35              		.cfi_offset 4, -20
+  36              		.cfi_offset 5, -16
+  37              		.cfi_offset 6, -12
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+  40 0002 4746     		mov	r7, r8
+  41 0004 80B4     		push	{r7}
+  42              		.cfi_def_cfa_offset 24
+  43              		.cfi_offset 8, -24
+  44              	.LBB38:
+  45              	.LBB39:
+ 146:hawkeye.c     **** 
+  46              		.loc 1 146 0
+  47 0006 894B     		ldr	r3, .L45
+  48 0008 0824     		movs	r4, #8
+  49 000a 9846     		mov	r8, r3
+  50 000c 1D78     		ldrb	r5, [r3]
+  51              	.LVL1:
+  52 000e 17E0     		b	.L4
+  53              	.LVL2:
+  54              	.L2:
+  55              	.LBB40:
+  56              	.LBB41:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 5
+
+
+ 102:hawkeye.c     ****         }
+  57              		.loc 1 102 0
+  58 0010 0020     		movs	r0, #0
+  59 0012 FFF7FEFF 		bl	hawkeye_data_Write
+  60              	.LVL3:
+  61              	.L3:
+ 106:hawkeye.c     **** 
+  62              		.loc 1 106 0
+  63 0016 0120     		movs	r0, #1
+  64 0018 FFF7FEFF 		bl	CyDelayCycles
+  65              	.LVL4:
+ 112:hawkeye.c     **** 
+  66              		.loc 1 112 0
+  67 001c 0120     		movs	r0, #1
+  68 001e FFF7FEFF 		bl	hawkeye_clk_Write
+  69              	.LVL5:
+ 114:hawkeye.c     **** 
+  70              		.loc 1 114 0
+  71 0022 0120     		movs	r0, #1
+  72 0024 FFF7FEFF 		bl	CyDelayCycles
+  73              	.LVL6:
+  74 0028 013C     		subs	r4, r4, #1
+ 116:hawkeye.c     **** 
+  75              		.loc 1 116 0
+  76 002a 0020     		movs	r0, #0
+  77 002c FFF7FEFF 		bl	hawkeye_clk_Write
+  78              	.LVL7:
+ 109:hawkeye.c     **** 
+  79              		.loc 1 109 0
+  80 0030 6D00     		lsls	r5, r5, #1
+  81              	.LVL8:
+ 119:hawkeye.c     ****     }
+  82              		.loc 1 119 0
+  83 0032 0120     		movs	r0, #1
+  84 0034 E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+  85              		.loc 1 109 0
+  86 0036 EDB2     		uxtb	r5, r5
+  87              	.LVL9:
+ 119:hawkeye.c     ****     }
+  88              		.loc 1 119 0
+  89 0038 FFF7FEFF 		bl	CyDelayCycles
+  90              	.LVL10:
+  93:hawkeye.c     ****     {
+  91              		.loc 1 93 0
+  92 003c 002C     		cmp	r4, #0
+  93 003e 06D0     		beq	.L39
+  94              	.L4:
+  96:hawkeye.c     ****         {
+  95              		.loc 1 96 0
+  96 0040 6BB2     		sxtb	r3, r5
+  97 0042 002B     		cmp	r3, #0
+  98 0044 E4DA     		bge	.L2
+  98:hawkeye.c     ****         }
+  99              		.loc 1 98 0
+ 100 0046 0120     		movs	r0, #1
+ 101 0048 FFF7FEFF 		bl	hawkeye_data_Write
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 6
+
+
+ 102              	.LVL11:
+ 103 004c E3E7     		b	.L3
+ 104              	.L39:
+ 123:hawkeye.c     **** 
+ 105              		.loc 1 123 0
+ 106 004e 0020     		movs	r0, #0
+ 107 0050 FFF7FEFF 		bl	hawkeye_data_Write
+ 108              	.LVL12:
+ 126:hawkeye.c     **** }
+ 109              		.loc 1 126 0
+ 110 0054 0220     		movs	r0, #2
+ 111 0056 FFF7FEFF 		bl	CyDelayCycles
+ 112              	.LVL13:
+ 113 005a 754F     		ldr	r7, .L45+4
+ 114 005c 3E00     		movs	r6, r7
+ 115 005e 0C36     		adds	r6, r6, #12
+ 116              	.LVL14:
+ 117              	.L8:
+ 118              	.LBE41:
+ 119              	.LBE40:
+ 120              	.LBE39:
+ 121              	.LBE38:
+ 122              	.LBB42:
+ 123              	.LBB43:
+ 146:hawkeye.c     **** 
+ 124              		.loc 1 146 0
+ 125 0060 3D78     		ldrb	r5, [r7]
+ 126              	.LVL15:
+ 127 0062 0824     		movs	r4, #8
+ 128 0064 17E0     		b	.L7
+ 129              	.LVL16:
+ 130              	.L5:
+ 131              	.LBB44:
+ 132              	.LBB45:
+ 102:hawkeye.c     ****         }
+ 133              		.loc 1 102 0
+ 134 0066 0020     		movs	r0, #0
+ 135 0068 FFF7FEFF 		bl	hawkeye_data_Write
+ 136              	.LVL17:
+ 137              	.L6:
+ 106:hawkeye.c     **** 
+ 138              		.loc 1 106 0
+ 139 006c 0120     		movs	r0, #1
+ 140 006e FFF7FEFF 		bl	CyDelayCycles
+ 141              	.LVL18:
+ 112:hawkeye.c     **** 
+ 142              		.loc 1 112 0
+ 143 0072 0120     		movs	r0, #1
+ 144 0074 FFF7FEFF 		bl	hawkeye_clk_Write
+ 145              	.LVL19:
+ 114:hawkeye.c     **** 
+ 146              		.loc 1 114 0
+ 147 0078 0120     		movs	r0, #1
+ 148 007a FFF7FEFF 		bl	CyDelayCycles
+ 149              	.LVL20:
+ 150 007e 013C     		subs	r4, r4, #1
+ 116:hawkeye.c     **** 
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 7
+
+
+ 151              		.loc 1 116 0
+ 152 0080 0020     		movs	r0, #0
+ 153 0082 FFF7FEFF 		bl	hawkeye_clk_Write
+ 154              	.LVL21:
+ 109:hawkeye.c     **** 
+ 155              		.loc 1 109 0
+ 156 0086 6D00     		lsls	r5, r5, #1
+ 157              	.LVL22:
+ 119:hawkeye.c     ****     }
+ 158              		.loc 1 119 0
+ 159 0088 0120     		movs	r0, #1
+ 160 008a E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+ 161              		.loc 1 109 0
+ 162 008c EDB2     		uxtb	r5, r5
+ 163              	.LVL23:
+ 119:hawkeye.c     ****     }
+ 164              		.loc 1 119 0
+ 165 008e FFF7FEFF 		bl	CyDelayCycles
+ 166              	.LVL24:
+  93:hawkeye.c     ****     {
+ 167              		.loc 1 93 0
+ 168 0092 002C     		cmp	r4, #0
+ 169 0094 06D0     		beq	.L40
+ 170              	.L7:
+  96:hawkeye.c     ****         {
+ 171              		.loc 1 96 0
+ 172 0096 6BB2     		sxtb	r3, r5
+ 173 0098 002B     		cmp	r3, #0
+ 174 009a E4DA     		bge	.L5
+  98:hawkeye.c     ****         }
+ 175              		.loc 1 98 0
+ 176 009c 0120     		movs	r0, #1
+ 177 009e FFF7FEFF 		bl	hawkeye_data_Write
+ 178              	.LVL25:
+ 179 00a2 E3E7     		b	.L6
+ 180              	.L40:
+ 123:hawkeye.c     **** 
+ 181              		.loc 1 123 0
+ 182 00a4 0020     		movs	r0, #0
+ 183 00a6 FFF7FEFF 		bl	hawkeye_data_Write
+ 184              	.LVL26:
+ 185              	.LBE45:
+ 186              	.LBE44:
+ 152:hawkeye.c     ****     }
+ 187              		.loc 1 152 0
+ 188 00aa 0137     		adds	r7, r7, #1
+ 189              	.LVL27:
+ 190              	.LBB47:
+ 191              	.LBB46:
+ 126:hawkeye.c     **** }
+ 192              		.loc 1 126 0
+ 193 00ac 0220     		movs	r0, #2
+ 194 00ae FFF7FEFF 		bl	CyDelayCycles
+ 195              	.LVL28:
+ 196              	.LBE46:
+ 197              	.LBE47:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 8
+
+
+ 143:hawkeye.c     ****     {
+ 198              		.loc 1 143 0
+ 199 00b2 B742     		cmp	r7, r6
+ 200 00b4 D4D1     		bne	.L8
+ 201 00b6 5F4F     		ldr	r7, .L45+8
+ 202              	.LVL29:
+ 203 00b8 3E00     		movs	r6, r7
+ 204 00ba 0C36     		adds	r6, r6, #12
+ 205              	.L12:
+ 206              	.LVL30:
+ 207              	.LBE43:
+ 208              	.LBE42:
+ 209              	.LBB48:
+ 210              	.LBB49:
+ 146:hawkeye.c     **** 
+ 211              		.loc 1 146 0
+ 212 00bc 3D78     		ldrb	r5, [r7]
+ 213              	.LVL31:
+ 214 00be 0824     		movs	r4, #8
+ 215 00c0 17E0     		b	.L11
+ 216              	.LVL32:
+ 217              	.L9:
+ 218              	.LBB50:
+ 219              	.LBB51:
+ 102:hawkeye.c     ****         }
+ 220              		.loc 1 102 0
+ 221 00c2 0020     		movs	r0, #0
+ 222 00c4 FFF7FEFF 		bl	hawkeye_data_Write
+ 223              	.LVL33:
+ 224              	.L10:
+ 106:hawkeye.c     **** 
+ 225              		.loc 1 106 0
+ 226 00c8 0120     		movs	r0, #1
+ 227 00ca FFF7FEFF 		bl	CyDelayCycles
+ 228              	.LVL34:
+ 112:hawkeye.c     **** 
+ 229              		.loc 1 112 0
+ 230 00ce 0120     		movs	r0, #1
+ 231 00d0 FFF7FEFF 		bl	hawkeye_clk_Write
+ 232              	.LVL35:
+ 114:hawkeye.c     **** 
+ 233              		.loc 1 114 0
+ 234 00d4 0120     		movs	r0, #1
+ 235 00d6 FFF7FEFF 		bl	CyDelayCycles
+ 236              	.LVL36:
+ 237 00da 013C     		subs	r4, r4, #1
+ 116:hawkeye.c     **** 
+ 238              		.loc 1 116 0
+ 239 00dc 0020     		movs	r0, #0
+ 240 00de FFF7FEFF 		bl	hawkeye_clk_Write
+ 241              	.LVL37:
+ 109:hawkeye.c     **** 
+ 242              		.loc 1 109 0
+ 243 00e2 6D00     		lsls	r5, r5, #1
+ 244              	.LVL38:
+ 119:hawkeye.c     ****     }
+ 245              		.loc 1 119 0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 9
+
+
+ 246 00e4 0120     		movs	r0, #1
+ 247 00e6 E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+ 248              		.loc 1 109 0
+ 249 00e8 EDB2     		uxtb	r5, r5
+ 250              	.LVL39:
+ 119:hawkeye.c     ****     }
+ 251              		.loc 1 119 0
+ 252 00ea FFF7FEFF 		bl	CyDelayCycles
+ 253              	.LVL40:
+  93:hawkeye.c     ****     {
+ 254              		.loc 1 93 0
+ 255 00ee 002C     		cmp	r4, #0
+ 256 00f0 06D0     		beq	.L41
+ 257              	.L11:
+  96:hawkeye.c     ****         {
+ 258              		.loc 1 96 0
+ 259 00f2 6BB2     		sxtb	r3, r5
+ 260 00f4 002B     		cmp	r3, #0
+ 261 00f6 E4DA     		bge	.L9
+  98:hawkeye.c     ****         }
+ 262              		.loc 1 98 0
+ 263 00f8 0120     		movs	r0, #1
+ 264 00fa FFF7FEFF 		bl	hawkeye_data_Write
+ 265              	.LVL41:
+ 266 00fe E3E7     		b	.L10
+ 267              	.L41:
+ 123:hawkeye.c     **** 
+ 268              		.loc 1 123 0
+ 269 0100 0020     		movs	r0, #0
+ 270 0102 FFF7FEFF 		bl	hawkeye_data_Write
+ 271              	.LVL42:
+ 272              	.LBE51:
+ 273              	.LBE50:
+ 152:hawkeye.c     ****     }
+ 274              		.loc 1 152 0
+ 275 0106 0137     		adds	r7, r7, #1
+ 276              	.LVL43:
+ 277              	.LBB53:
+ 278              	.LBB52:
+ 126:hawkeye.c     **** }
+ 279              		.loc 1 126 0
+ 280 0108 0220     		movs	r0, #2
+ 281 010a FFF7FEFF 		bl	CyDelayCycles
+ 282              	.LVL44:
+ 283              	.LBE52:
+ 284              	.LBE53:
+ 143:hawkeye.c     ****     {
+ 285              		.loc 1 143 0
+ 286 010e B742     		cmp	r7, r6
+ 287 0110 D4D1     		bne	.L12
+ 288 0112 494F     		ldr	r7, .L45+12
+ 289              	.LVL45:
+ 290 0114 3E00     		movs	r6, r7
+ 291 0116 0C36     		adds	r6, r6, #12
+ 292              	.L16:
+ 293              	.LVL46:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 10
+
+
+ 294              	.LBE49:
+ 295              	.LBE48:
+ 296              	.LBB54:
+ 297              	.LBB55:
+ 146:hawkeye.c     **** 
+ 298              		.loc 1 146 0
+ 299 0118 3D78     		ldrb	r5, [r7]
+ 300              	.LVL47:
+ 301 011a 0824     		movs	r4, #8
+ 302 011c 17E0     		b	.L15
+ 303              	.LVL48:
+ 304              	.L13:
+ 305              	.LBB56:
+ 306              	.LBB57:
+ 102:hawkeye.c     ****         }
+ 307              		.loc 1 102 0
+ 308 011e 0020     		movs	r0, #0
+ 309 0120 FFF7FEFF 		bl	hawkeye_data_Write
+ 310              	.LVL49:
+ 311              	.L14:
+ 106:hawkeye.c     **** 
+ 312              		.loc 1 106 0
+ 313 0124 0120     		movs	r0, #1
+ 314 0126 FFF7FEFF 		bl	CyDelayCycles
+ 315              	.LVL50:
+ 112:hawkeye.c     **** 
+ 316              		.loc 1 112 0
+ 317 012a 0120     		movs	r0, #1
+ 318 012c FFF7FEFF 		bl	hawkeye_clk_Write
+ 319              	.LVL51:
+ 114:hawkeye.c     **** 
+ 320              		.loc 1 114 0
+ 321 0130 0120     		movs	r0, #1
+ 322 0132 FFF7FEFF 		bl	CyDelayCycles
+ 323              	.LVL52:
+ 324 0136 013C     		subs	r4, r4, #1
+ 116:hawkeye.c     **** 
+ 325              		.loc 1 116 0
+ 326 0138 0020     		movs	r0, #0
+ 327 013a FFF7FEFF 		bl	hawkeye_clk_Write
+ 328              	.LVL53:
+ 109:hawkeye.c     **** 
+ 329              		.loc 1 109 0
+ 330 013e 6D00     		lsls	r5, r5, #1
+ 331              	.LVL54:
+ 119:hawkeye.c     ****     }
+ 332              		.loc 1 119 0
+ 333 0140 0120     		movs	r0, #1
+ 334 0142 E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+ 335              		.loc 1 109 0
+ 336 0144 EDB2     		uxtb	r5, r5
+ 337              	.LVL55:
+ 119:hawkeye.c     ****     }
+ 338              		.loc 1 119 0
+ 339 0146 FFF7FEFF 		bl	CyDelayCycles
+ 340              	.LVL56:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 11
+
+
+  93:hawkeye.c     ****     {
+ 341              		.loc 1 93 0
+ 342 014a 002C     		cmp	r4, #0
+ 343 014c 06D0     		beq	.L42
+ 344              	.L15:
+  96:hawkeye.c     ****         {
+ 345              		.loc 1 96 0
+ 346 014e 6BB2     		sxtb	r3, r5
+ 347 0150 002B     		cmp	r3, #0
+ 348 0152 E4DA     		bge	.L13
+  98:hawkeye.c     ****         }
+ 349              		.loc 1 98 0
+ 350 0154 0120     		movs	r0, #1
+ 351 0156 FFF7FEFF 		bl	hawkeye_data_Write
+ 352              	.LVL57:
+ 353 015a E3E7     		b	.L14
+ 354              	.L42:
+ 123:hawkeye.c     **** 
+ 355              		.loc 1 123 0
+ 356 015c 0020     		movs	r0, #0
+ 357 015e FFF7FEFF 		bl	hawkeye_data_Write
+ 358              	.LVL58:
+ 359              	.LBE57:
+ 360              	.LBE56:
+ 152:hawkeye.c     ****     }
+ 361              		.loc 1 152 0
+ 362 0162 0137     		adds	r7, r7, #1
+ 363              	.LVL59:
+ 364              	.LBB59:
+ 365              	.LBB58:
+ 126:hawkeye.c     **** }
+ 366              		.loc 1 126 0
+ 367 0164 0220     		movs	r0, #2
+ 368 0166 FFF7FEFF 		bl	CyDelayCycles
+ 369              	.LVL60:
+ 370              	.LBE58:
+ 371              	.LBE59:
+ 143:hawkeye.c     ****     {
+ 372              		.loc 1 143 0
+ 373 016a B742     		cmp	r7, r6
+ 374 016c D4D1     		bne	.L16
+ 375              	.LVL61:
+ 376              	.LBE55:
+ 377              	.LBE54:
+ 378              	.LBB60:
+ 379              	.LBB61:
+ 146:hawkeye.c     **** 
+ 380              		.loc 1 146 0
+ 381 016e 334B     		ldr	r3, .L45+16
+ 382 0170 0824     		movs	r4, #8
+ 383 0172 1D78     		ldrb	r5, [r3]
+ 384              	.LVL62:
+ 385 0174 17E0     		b	.L20
+ 386              	.LVL63:
+ 387              	.L18:
+ 388              	.LBB62:
+ 389              	.LBB63:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 12
+
+
+ 102:hawkeye.c     ****         }
+ 390              		.loc 1 102 0
+ 391 0176 0020     		movs	r0, #0
+ 392 0178 FFF7FEFF 		bl	hawkeye_data_Write
+ 393              	.LVL64:
+ 394              	.L19:
+ 106:hawkeye.c     **** 
+ 395              		.loc 1 106 0
+ 396 017c 0120     		movs	r0, #1
+ 397 017e FFF7FEFF 		bl	CyDelayCycles
+ 398              	.LVL65:
+ 112:hawkeye.c     **** 
+ 399              		.loc 1 112 0
+ 400 0182 0120     		movs	r0, #1
+ 401 0184 FFF7FEFF 		bl	hawkeye_clk_Write
+ 402              	.LVL66:
+ 114:hawkeye.c     **** 
+ 403              		.loc 1 114 0
+ 404 0188 0120     		movs	r0, #1
+ 405 018a FFF7FEFF 		bl	CyDelayCycles
+ 406              	.LVL67:
+ 407 018e 013C     		subs	r4, r4, #1
+ 116:hawkeye.c     **** 
+ 408              		.loc 1 116 0
+ 409 0190 0020     		movs	r0, #0
+ 410 0192 FFF7FEFF 		bl	hawkeye_clk_Write
+ 411              	.LVL68:
+ 109:hawkeye.c     **** 
+ 412              		.loc 1 109 0
+ 413 0196 6D00     		lsls	r5, r5, #1
+ 414              	.LVL69:
+ 119:hawkeye.c     ****     }
+ 415              		.loc 1 119 0
+ 416 0198 0120     		movs	r0, #1
+ 417 019a E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+ 418              		.loc 1 109 0
+ 419 019c EDB2     		uxtb	r5, r5
+ 420              	.LVL70:
+ 119:hawkeye.c     ****     }
+ 421              		.loc 1 119 0
+ 422 019e FFF7FEFF 		bl	CyDelayCycles
+ 423              	.LVL71:
+  93:hawkeye.c     ****     {
+ 424              		.loc 1 93 0
+ 425 01a2 002C     		cmp	r4, #0
+ 426 01a4 06D0     		beq	.L43
+ 427              	.L20:
+  96:hawkeye.c     ****         {
+ 428              		.loc 1 96 0
+ 429 01a6 6BB2     		sxtb	r3, r5
+ 430 01a8 002B     		cmp	r3, #0
+ 431 01aa E4DA     		bge	.L18
+  98:hawkeye.c     ****         }
+ 432              		.loc 1 98 0
+ 433 01ac 0120     		movs	r0, #1
+ 434 01ae FFF7FEFF 		bl	hawkeye_data_Write
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 13
+
+
+ 435              	.LVL72:
+ 436 01b2 E3E7     		b	.L19
+ 437              	.L43:
+ 123:hawkeye.c     **** 
+ 438              		.loc 1 123 0
+ 439 01b4 0020     		movs	r0, #0
+ 440 01b6 FFF7FEFF 		bl	hawkeye_data_Write
+ 441              	.LVL73:
+ 126:hawkeye.c     **** }
+ 442              		.loc 1 126 0
+ 443 01ba 0220     		movs	r0, #2
+ 444 01bc FFF7FEFF 		bl	CyDelayCycles
+ 445              	.LVL74:
+ 446 01c0 1F4F     		ldr	r7, .L45+20
+ 447              	.LVL75:
+ 448 01c2 3E00     		movs	r6, r7
+ 449 01c4 6436     		adds	r6, r6, #100
+ 450              	.LVL76:
+ 451              	.L24:
+ 452              	.LBE63:
+ 453              	.LBE62:
+ 454              	.LBE61:
+ 455              	.LBE60:
+ 456              	.LBB64:
+ 457              	.LBB65:
+ 146:hawkeye.c     **** 
+ 458              		.loc 1 146 0
+ 459 01c6 3D78     		ldrb	r5, [r7]
+ 460              	.LVL77:
+ 461 01c8 0824     		movs	r4, #8
+ 462 01ca 17E0     		b	.L23
+ 463              	.LVL78:
+ 464              	.L21:
+ 465              	.LBB66:
+ 466              	.LBB67:
+ 102:hawkeye.c     ****         }
+ 467              		.loc 1 102 0
+ 468 01cc 0020     		movs	r0, #0
+ 469 01ce FFF7FEFF 		bl	hawkeye_data_Write
+ 470              	.LVL79:
+ 471              	.L22:
+ 106:hawkeye.c     **** 
+ 472              		.loc 1 106 0
+ 473 01d2 0120     		movs	r0, #1
+ 474 01d4 FFF7FEFF 		bl	CyDelayCycles
+ 475              	.LVL80:
+ 112:hawkeye.c     **** 
+ 476              		.loc 1 112 0
+ 477 01d8 0120     		movs	r0, #1
+ 478 01da FFF7FEFF 		bl	hawkeye_clk_Write
+ 479              	.LVL81:
+ 114:hawkeye.c     **** 
+ 480              		.loc 1 114 0
+ 481 01de 0120     		movs	r0, #1
+ 482 01e0 FFF7FEFF 		bl	CyDelayCycles
+ 483              	.LVL82:
+ 484 01e4 013C     		subs	r4, r4, #1
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 14
+
+
+ 116:hawkeye.c     **** 
+ 485              		.loc 1 116 0
+ 486 01e6 0020     		movs	r0, #0
+ 487 01e8 FFF7FEFF 		bl	hawkeye_clk_Write
+ 488              	.LVL83:
+ 109:hawkeye.c     **** 
+ 489              		.loc 1 109 0
+ 490 01ec 6D00     		lsls	r5, r5, #1
+ 491              	.LVL84:
+ 119:hawkeye.c     ****     }
+ 492              		.loc 1 119 0
+ 493 01ee 0120     		movs	r0, #1
+ 494 01f0 E4B2     		uxtb	r4, r4
+ 109:hawkeye.c     **** 
+ 495              		.loc 1 109 0
+ 496 01f2 EDB2     		uxtb	r5, r5
+ 497              	.LVL85:
+ 119:hawkeye.c     ****     }
+ 498              		.loc 1 119 0
+ 499 01f4 FFF7FEFF 		bl	CyDelayCycles
+ 500              	.LVL86:
+  93:hawkeye.c     ****     {
+ 501              		.loc 1 93 0
+ 502 01f8 002C     		cmp	r4, #0
+ 503 01fa 06D0     		beq	.L44
+ 504              	.L23:
+  96:hawkeye.c     ****         {
+ 505              		.loc 1 96 0
+ 506 01fc 6BB2     		sxtb	r3, r5
+ 507 01fe 002B     		cmp	r3, #0
+ 508 0200 E4DA     		bge	.L21
+  98:hawkeye.c     ****         }
+ 509              		.loc 1 98 0
+ 510 0202 0120     		movs	r0, #1
+ 511 0204 FFF7FEFF 		bl	hawkeye_data_Write
+ 512              	.LVL87:
+ 513 0208 E3E7     		b	.L22
+ 514              	.L44:
+ 123:hawkeye.c     **** 
+ 515              		.loc 1 123 0
+ 516 020a 0020     		movs	r0, #0
+ 517 020c FFF7FEFF 		bl	hawkeye_data_Write
+ 518              	.LVL88:
+ 519              	.LBE67:
+ 520              	.LBE66:
+ 152:hawkeye.c     ****     }
+ 521              		.loc 1 152 0
+ 522 0210 0137     		adds	r7, r7, #1
+ 523              	.LVL89:
+ 524              	.LBB69:
+ 525              	.LBB68:
+ 126:hawkeye.c     **** }
+ 526              		.loc 1 126 0
+ 527 0212 0220     		movs	r0, #2
+ 528 0214 FFF7FEFF 		bl	CyDelayCycles
+ 529              	.LVL90:
+ 530              	.LBE68:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 15
+
+
+ 531              	.LBE69:
+ 143:hawkeye.c     ****     {
+ 532              		.loc 1 143 0
+ 533 0218 B742     		cmp	r7, r6
+ 534 021a D4D1     		bne	.L24
+ 535              	.LVL91:
+ 536              	.LBE65:
+ 537              	.LBE64:
+ 172:hawkeye.c     **** 
+ 173:hawkeye.c     **** 
+ 174:hawkeye.c     ****     output_to_debugger( (uint8_t *) &frame_count, (uint8_t) sizeof( frame_count ) );
+ 175:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &CapSense_sensorRaw[0], (uint8_t) sizeof( CapSense_sensorRaw 
+ 176:hawkeye.c     ****     output_to_debugger( (uint8_t *) &Capsense_FilteredRawData[0], (uint8_t) sizeof( Capsense_Filter
+ 177:hawkeye.c     ****     output_to_debugger( (uint8_t *) &CapSense_sensorBaseline[0], (uint8_t) sizeof( CapSense_sensorB
+ 178:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &CapSense_SensorSignal[0], (uint8_t) sizeof( CapSense_SensorS
+ 179:hawkeye.c     ****     output_to_debugger( (uint8_t *) &Sub_Buff[0], (uint8_t) sizeof( Sub_Buff ) );  
+ 180:hawkeye.c     ****     output_to_debugger( (uint8_t *) &CapSense_sensorOnMask[0], (uint8_t) sizeof(CapSense_sensorOnMa
+ 181:hawkeye.c     ****     /*
+ 182:hawkeye.c     ****     unsigned char i = 0;
+ 183:hawkeye.c     ****     for(i = 0; i < 25; i++)
+ 184:hawkeye.c     ****     {
+ 185:hawkeye.c     ****         output_to_debugger( (uint8_t *) &temp[i], (uint8_t) sizeof(temp ) );  
+ 186:hawkeye.c     ****     }
+ 187:hawkeye.c     ****     */
+ 188:hawkeye.c     ****     
+ 189:hawkeye.c     ****     output_to_debugger( (uint8_t *) &temp[0], (uint8_t) sizeof(temp ) ); 
+ 190:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[1], (uint8_t) sizeof(temp ) );  
+ 191:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[2], (uint8_t) sizeof(temp ) ); 
+ 192:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[3], (uint8_t) sizeof(temp ) );   
+ 193:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[4], (uint8_t) sizeof(temp ) ); 
+ 194:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[5], (uint8_t) sizeof(temp ) );  
+ 195:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[6], (uint8_t) sizeof(temp ) ); 
+ 196:hawkeye.c     ****     //output_to_debugger( (uint8_t *) &temp[7], (uint8_t) sizeof(temp ) );  
+ 197:hawkeye.c     ****     
+ 198:hawkeye.c     ****     /*
+ 199:hawkeye.c     ****     output_to_debugger( (uint8_t *) &qt_measure_data.channel_references[0], (uint8_t) sizeof( qt_me
+ 200:hawkeye.c     ****     
+ 201:hawkeye.c     ****     for( i = 0u; i < QT_NUM_CHANNELS; i++ )
+ 202:hawkeye.c     ****     {
+ 203:hawkeye.c     ****         sensor_delta = qt_measure_data.channel_references[i] - qt_measure_data.channel_signals[i];
+ 204:hawkeye.c     ****         output_to_debugger( (uint8_t *) &sensor_delta, sizeof( int16_t ) );
+ 205:hawkeye.c     ****     }
+ 206:hawkeye.c     ****     
+ 207:hawkeye.c     ****     output_to_debugger( (uint8_t *) &qt_measure_data.qt_touch_status, (uint8_t) sizeof( qt_measure_
+ 208:hawkeye.c     ****     
+ 209:hawkeye.c     ****     
+ 210:hawkeye.c     ****     for( i = 0u; i < QT_MAX_NUM_ROTORS_SLIDERS; i++ )
+ 211:hawkeye.c     ****     {
+ 212:hawkeye.c     ****         output_to_debugger( (uint8_t *) &qt_measure_data.qt_touch_status.rotor_slider_values[i], si
+ 213:hawkeye.c     ****         output_to_debugger( (uint8_t *) &zero, sizeof( uint8_t ) );
+ 214:hawkeye.c     ****     }
+ 215:hawkeye.c     ****    
+ 216:hawkeye.c     ****     
+ 217:hawkeye.c     ****     k = 100;
+ 218:hawkeye.c     **** 
+ 219:hawkeye.c     ****     output_to_debugger( (uint8_t *) &k, (uint8_t) sizeof(k ) );        
+ 220:hawkeye.c     **** 	 */
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 16
+
+
+ 221:hawkeye.c     ****     
+ 222:hawkeye.c     ****     frame_count++;
+ 538              		.loc 1 222 0
+ 539 021c 4346     		mov	r3, r8
+ 540 021e 4246     		mov	r2, r8
+ 541 0220 1B78     		ldrb	r3, [r3]
+ 223:hawkeye.c     **** }
+ 542              		.loc 1 223 0
+ 543              		@ sp needed
+ 222:hawkeye.c     **** }
+ 544              		.loc 1 222 0
+ 545 0222 0133     		adds	r3, r3, #1
+ 546 0224 1370     		strb	r3, [r2]
+ 547              		.loc 1 223 0
+ 548 0226 04BC     		pop	{r2}
+ 549 0228 9046     		mov	r8, r2
+ 550 022a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 551              	.L46:
+ 552              		.align	2
+ 553              	.L45:
+ 554 022c 00000000 		.word	.LANCHOR0
+ 555 0230 00000000 		.word	Capsense_FilteredRawData
+ 556 0234 00000000 		.word	CapSense_sensorBaseline
+ 557 0238 00000000 		.word	Sub_Buff
+ 558 023c 00000000 		.word	CapSense_sensorOnMask
+ 559 0240 00000000 		.word	temp
+ 560              		.cfi_endproc
+ 561              	.LFE34:
+ 562              		.size	report_debug_data, .-report_debug_data
+ 563              		.comm	temp,100,4
+ 564              		.bss
+ 565              		.set	.LANCHOR0,. + 0
+ 566              		.type	frame_count, %object
+ 567              		.size	frame_count, 1
+ 568              	frame_count:
+ 569 0000 00       		.space	1
+ 570              		.text
+ 571              	.Letext0:
+ 572              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 573              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 574              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 575              		.file 5 "Generated_Source\\PSoC4/hawkeye_data.h"
+ 576              		.file 6 "Generated_Source\\PSoC4/CyLib.h"
+ 577              		.file 7 "Generated_Source\\PSoC4/hawkeye_clk.h"
+ 578              		.section	.debug_info,"",%progbits
+ 579              	.Ldebug_info0:
+ 580 0000 11080000 		.4byte	0x811
+ 581 0004 0400     		.2byte	0x4
+ 582 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 583 000a 04       		.byte	0x4
+ 584 000b 01       		.uleb128 0x1
+ 585 000c 50010000 		.4byte	.LASF30
+ 586 0010 0C       		.byte	0xc
+ 587 0011 33010000 		.4byte	.LASF31
+ 588 0015 84000000 		.4byte	.LASF32
+ 589 0019 60000000 		.4byte	.Ldebug_ranges0+0x60
+ 590 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 17
+
+
+ 591 0021 00000000 		.4byte	.Ldebug_line0
+ 592 0025 02       		.uleb128 0x2
+ 593 0026 01       		.byte	0x1
+ 594 0027 06       		.byte	0x6
+ 595 0028 84020000 		.4byte	.LASF0
+ 596 002c 03       		.uleb128 0x3
+ 597 002d 0E000000 		.4byte	.LASF9
+ 598 0031 02       		.byte	0x2
+ 599 0032 1D       		.byte	0x1d
+ 600 0033 37000000 		.4byte	0x37
+ 601 0037 02       		.uleb128 0x2
+ 602 0038 01       		.byte	0x1
+ 603 0039 08       		.byte	0x8
+ 604 003a F0000000 		.4byte	.LASF1
+ 605 003e 02       		.uleb128 0x2
+ 606 003f 02       		.byte	0x2
+ 607 0040 05       		.byte	0x5
+ 608 0041 4F020000 		.4byte	.LASF2
+ 609 0045 02       		.uleb128 0x2
+ 610 0046 02       		.byte	0x2
+ 611 0047 07       		.byte	0x7
+ 612 0048 31000000 		.4byte	.LASF3
+ 613 004c 02       		.uleb128 0x2
+ 614 004d 04       		.byte	0x4
+ 615 004e 05       		.byte	0x5
+ 616 004f 6F020000 		.4byte	.LASF4
+ 617 0053 02       		.uleb128 0x2
+ 618 0054 04       		.byte	0x4
+ 619 0055 07       		.byte	0x7
+ 620 0056 16010000 		.4byte	.LASF5
+ 621 005a 02       		.uleb128 0x2
+ 622 005b 08       		.byte	0x8
+ 623 005c 05       		.byte	0x5
+ 624 005d 3C020000 		.4byte	.LASF6
+ 625 0061 02       		.uleb128 0x2
+ 626 0062 08       		.byte	0x8
+ 627 0063 07       		.byte	0x7
+ 628 0064 02020000 		.4byte	.LASF7
+ 629 0068 04       		.uleb128 0x4
+ 630 0069 04       		.byte	0x4
+ 631 006a 05       		.byte	0x5
+ 632 006b 696E7400 		.ascii	"int\000"
+ 633 006f 02       		.uleb128 0x2
+ 634 0070 04       		.byte	0x4
+ 635 0071 07       		.byte	0x7
+ 636 0072 F5010000 		.4byte	.LASF8
+ 637 0076 03       		.uleb128 0x3
+ 638 0077 19020000 		.4byte	.LASF10
+ 639 007b 03       		.byte	0x3
+ 640 007c 18       		.byte	0x18
+ 641 007d 2C000000 		.4byte	0x2c
+ 642 0081 05       		.uleb128 0x5
+ 643 0082 2D010000 		.4byte	.LASF11
+ 644 0086 04       		.byte	0x4
+ 645 0087 D201     		.2byte	0x1d2
+ 646 0089 37000000 		.4byte	0x37
+ 647 008d 05       		.uleb128 0x5
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 18
+
+
+ 648 008e EE010000 		.4byte	.LASF12
+ 649 0092 04       		.byte	0x4
+ 650 0093 D301     		.2byte	0x1d3
+ 651 0095 45000000 		.4byte	0x45
+ 652 0099 02       		.uleb128 0x2
+ 653 009a 04       		.byte	0x4
+ 654 009b 04       		.byte	0x4
+ 655 009c 79000000 		.4byte	.LASF13
+ 656 00a0 02       		.uleb128 0x2
+ 657 00a1 08       		.byte	0x8
+ 658 00a2 04       		.byte	0x4
+ 659 00a3 DE010000 		.4byte	.LASF14
+ 660 00a7 02       		.uleb128 0x2
+ 661 00a8 01       		.byte	0x1
+ 662 00a9 08       		.byte	0x8
+ 663 00aa 4A020000 		.4byte	.LASF15
+ 664 00ae 02       		.uleb128 0x2
+ 665 00af 08       		.byte	0x8
+ 666 00b0 04       		.byte	0x4
+ 667 00b1 78020000 		.4byte	.LASF16
+ 668 00b5 02       		.uleb128 0x2
+ 669 00b6 04       		.byte	0x4
+ 670 00b7 07       		.byte	0x7
+ 671 00b8 33020000 		.4byte	.LASF17
+ 672 00bc 06       		.uleb128 0x6
+ 673 00bd 18000000 		.4byte	.LASF20
+ 674 00c1 01       		.byte	0x1
+ 675 00c2 8A       		.byte	0x8a
+ 676 00c3 01       		.byte	0x1
+ 677 00c4 F1000000 		.4byte	0xf1
+ 678 00c8 07       		.uleb128 0x7
+ 679 00c9 7000     		.ascii	"p\000"
+ 680 00cb 01       		.byte	0x1
+ 681 00cc 8A       		.byte	0x8a
+ 682 00cd F1000000 		.4byte	0xf1
+ 683 00d1 08       		.uleb128 0x8
+ 684 00d2 2B000000 		.4byte	.LASF18
+ 685 00d6 01       		.byte	0x1
+ 686 00d7 8A       		.byte	0x8a
+ 687 00d8 76000000 		.4byte	0x76
+ 688 00dc 09       		.uleb128 0x9
+ 689 00dd 6900     		.ascii	"i\000"
+ 690 00df 01       		.byte	0x1
+ 691 00e0 8C       		.byte	0x8c
+ 692 00e1 76000000 		.4byte	0x76
+ 693 00e5 0A       		.uleb128 0xa
+ 694 00e6 7F000000 		.4byte	.LASF19
+ 695 00ea 01       		.byte	0x1
+ 696 00eb 8D       		.byte	0x8d
+ 697 00ec 76000000 		.4byte	0x76
+ 698 00f0 00       		.byte	0
+ 699 00f1 0B       		.uleb128 0xb
+ 700 00f2 04       		.byte	0x4
+ 701 00f3 76000000 		.4byte	0x76
+ 702 00f7 06       		.uleb128 0x6
+ 703 00f8 69000000 		.4byte	.LASF21
+ 704 00fc 01       		.byte	0x1
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 19
+
+
+ 705 00fd 56       		.byte	0x56
+ 706 00fe 01       		.byte	0x1
+ 707 00ff 18010000 		.4byte	0x118
+ 708 0103 08       		.uleb128 0x8
+ 709 0104 7F000000 		.4byte	.LASF19
+ 710 0108 01       		.byte	0x1
+ 711 0109 56       		.byte	0x56
+ 712 010a 76000000 		.4byte	0x76
+ 713 010e 09       		.uleb128 0x9
+ 714 010f 6900     		.ascii	"i\000"
+ 715 0111 01       		.byte	0x1
+ 716 0112 5B       		.byte	0x5b
+ 717 0113 81000000 		.4byte	0x81
+ 718 0117 00       		.byte	0
+ 719 0118 0C       		.uleb128 0xc
+ 720 0119 90020000 		.4byte	.LASF33
+ 721 011d 01       		.byte	0x1
+ 722 011e AA       		.byte	0xaa
+ 723 011f 00000000 		.4byte	.LFB34
+ 724 0123 44020000 		.4byte	.LFE34-.LFB34
+ 725 0127 01       		.uleb128 0x1
+ 726 0128 9C       		.byte	0x9c
+ 727 0129 75070000 		.4byte	0x775
+ 728 012d 0D       		.uleb128 0xd
+ 729 012e BC000000 		.4byte	0xbc
+ 730 0132 06000000 		.4byte	.LBB38
+ 731 0136 5A000000 		.4byte	.LBE38-.LBB38
+ 732 013a 01       		.byte	0x1
+ 733 013b AE       		.byte	0xae
+ 734 013c 3F020000 		.4byte	0x23f
+ 735 0140 0E       		.uleb128 0xe
+ 736 0141 D1000000 		.4byte	0xd1
+ 737 0145 01       		.byte	0x1
+ 738 0146 0F       		.uleb128 0xf
+ 739 0147 C8000000 		.4byte	0xc8
+ 740 014b 00000000 		.4byte	.LLST0
+ 741 014f 10       		.uleb128 0x10
+ 742 0150 06000000 		.4byte	.LBB39
+ 743 0154 5A000000 		.4byte	.LBE39-.LBB39
+ 744 0158 11       		.uleb128 0x11
+ 745 0159 DC000000 		.4byte	0xdc
+ 746 015d 28000000 		.4byte	.LLST1
+ 747 0161 11       		.uleb128 0x11
+ 748 0162 E5000000 		.4byte	0xe5
+ 749 0166 48000000 		.4byte	.LLST2
+ 750 016a 12       		.uleb128 0x12
+ 751 016b F7000000 		.4byte	0xf7
+ 752 016f 10000000 		.4byte	.LBB40
+ 753 0173 50000000 		.4byte	.LBE40-.LBB40
+ 754 0177 01       		.byte	0x1
+ 755 0178 95       		.byte	0x95
+ 756 0179 0F       		.uleb128 0xf
+ 757 017a 03010000 		.4byte	0x103
+ 758 017e 5B000000 		.4byte	.LLST3
+ 759 0182 10       		.uleb128 0x10
+ 760 0183 10000000 		.4byte	.LBB41
+ 761 0187 50000000 		.4byte	.LBE41-.LBB41
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 20
+
+
+ 762 018b 11       		.uleb128 0x11
+ 763 018c 0E010000 		.4byte	0x10e
+ 764 0190 79000000 		.4byte	.LLST4
+ 765 0194 13       		.uleb128 0x13
+ 766 0195 16000000 		.4byte	.LVL3
+ 767 0199 F3070000 		.4byte	0x7f3
+ 768 019d A7010000 		.4byte	0x1a7
+ 769 01a1 14       		.uleb128 0x14
+ 770 01a2 01       		.uleb128 0x1
+ 771 01a3 50       		.byte	0x50
+ 772 01a4 01       		.uleb128 0x1
+ 773 01a5 30       		.byte	0x30
+ 774 01a6 00       		.byte	0
+ 775 01a7 13       		.uleb128 0x13
+ 776 01a8 1C000000 		.4byte	.LVL4
+ 777 01ac FE070000 		.4byte	0x7fe
+ 778 01b0 BA010000 		.4byte	0x1ba
+ 779 01b4 14       		.uleb128 0x14
+ 780 01b5 01       		.uleb128 0x1
+ 781 01b6 50       		.byte	0x50
+ 782 01b7 01       		.uleb128 0x1
+ 783 01b8 31       		.byte	0x31
+ 784 01b9 00       		.byte	0
+ 785 01ba 13       		.uleb128 0x13
+ 786 01bb 22000000 		.4byte	.LVL5
+ 787 01bf 09080000 		.4byte	0x809
+ 788 01c3 CD010000 		.4byte	0x1cd
+ 789 01c7 14       		.uleb128 0x14
+ 790 01c8 01       		.uleb128 0x1
+ 791 01c9 50       		.byte	0x50
+ 792 01ca 01       		.uleb128 0x1
+ 793 01cb 31       		.byte	0x31
+ 794 01cc 00       		.byte	0
+ 795 01cd 13       		.uleb128 0x13
+ 796 01ce 28000000 		.4byte	.LVL6
+ 797 01d2 FE070000 		.4byte	0x7fe
+ 798 01d6 E0010000 		.4byte	0x1e0
+ 799 01da 14       		.uleb128 0x14
+ 800 01db 01       		.uleb128 0x1
+ 801 01dc 50       		.byte	0x50
+ 802 01dd 01       		.uleb128 0x1
+ 803 01de 31       		.byte	0x31
+ 804 01df 00       		.byte	0
+ 805 01e0 13       		.uleb128 0x13
+ 806 01e1 30000000 		.4byte	.LVL7
+ 807 01e5 09080000 		.4byte	0x809
+ 808 01e9 F3010000 		.4byte	0x1f3
+ 809 01ed 14       		.uleb128 0x14
+ 810 01ee 01       		.uleb128 0x1
+ 811 01ef 50       		.byte	0x50
+ 812 01f0 01       		.uleb128 0x1
+ 813 01f1 30       		.byte	0x30
+ 814 01f2 00       		.byte	0
+ 815 01f3 13       		.uleb128 0x13
+ 816 01f4 3C000000 		.4byte	.LVL10
+ 817 01f8 FE070000 		.4byte	0x7fe
+ 818 01fc 06020000 		.4byte	0x206
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 21
+
+
+ 819 0200 14       		.uleb128 0x14
+ 820 0201 01       		.uleb128 0x1
+ 821 0202 50       		.byte	0x50
+ 822 0203 01       		.uleb128 0x1
+ 823 0204 31       		.byte	0x31
+ 824 0205 00       		.byte	0
+ 825 0206 13       		.uleb128 0x13
+ 826 0207 4C000000 		.4byte	.LVL11
+ 827 020b F3070000 		.4byte	0x7f3
+ 828 020f 19020000 		.4byte	0x219
+ 829 0213 14       		.uleb128 0x14
+ 830 0214 01       		.uleb128 0x1
+ 831 0215 50       		.byte	0x50
+ 832 0216 01       		.uleb128 0x1
+ 833 0217 31       		.byte	0x31
+ 834 0218 00       		.byte	0
+ 835 0219 13       		.uleb128 0x13
+ 836 021a 54000000 		.4byte	.LVL12
+ 837 021e F3070000 		.4byte	0x7f3
+ 838 0222 2C020000 		.4byte	0x22c
+ 839 0226 14       		.uleb128 0x14
+ 840 0227 01       		.uleb128 0x1
+ 841 0228 50       		.byte	0x50
+ 842 0229 01       		.uleb128 0x1
+ 843 022a 30       		.byte	0x30
+ 844 022b 00       		.byte	0
+ 845 022c 15       		.uleb128 0x15
+ 846 022d 5A000000 		.4byte	.LVL13
+ 847 0231 FE070000 		.4byte	0x7fe
+ 848 0235 14       		.uleb128 0x14
+ 849 0236 01       		.uleb128 0x1
+ 850 0237 50       		.byte	0x50
+ 851 0238 01       		.uleb128 0x1
+ 852 0239 32       		.byte	0x32
+ 853 023a 00       		.byte	0
+ 854 023b 00       		.byte	0
+ 855 023c 00       		.byte	0
+ 856 023d 00       		.byte	0
+ 857 023e 00       		.byte	0
+ 858 023f 0D       		.uleb128 0xd
+ 859 0240 BC000000 		.4byte	0xbc
+ 860 0244 60000000 		.4byte	.LBB42
+ 861 0248 5C000000 		.4byte	.LBE42-.LBB42
+ 862 024c 01       		.byte	0x1
+ 863 024d B0       		.byte	0xb0
+ 864 024e 4C030000 		.4byte	0x34c
+ 865 0252 16       		.uleb128 0x16
+ 866 0253 D1000000 		.4byte	0xd1
+ 867 0257 0F       		.uleb128 0xf
+ 868 0258 C8000000 		.4byte	0xc8
+ 869 025c 8D000000 		.4byte	.LLST5
+ 870 0260 10       		.uleb128 0x10
+ 871 0261 60000000 		.4byte	.LBB43
+ 872 0265 5C000000 		.4byte	.LBE43-.LBB43
+ 873 0269 11       		.uleb128 0x11
+ 874 026a DC000000 		.4byte	0xdc
+ 875 026e B8000000 		.4byte	.LLST6
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 22
+
+
+ 876 0272 11       		.uleb128 0x11
+ 877 0273 E5000000 		.4byte	0xe5
+ 878 0277 CC000000 		.4byte	.LLST7
+ 879 027b 17       		.uleb128 0x17
+ 880 027c F7000000 		.4byte	0xf7
+ 881 0280 66000000 		.4byte	.LBB44
+ 882 0284 00000000 		.4byte	.Ldebug_ranges0+0
+ 883 0288 01       		.byte	0x1
+ 884 0289 95       		.byte	0x95
+ 885 028a 0F       		.uleb128 0xf
+ 886 028b 03010000 		.4byte	0x103
+ 887 028f DF000000 		.4byte	.LLST8
+ 888 0293 18       		.uleb128 0x18
+ 889 0294 00000000 		.4byte	.Ldebug_ranges0+0
+ 890 0298 11       		.uleb128 0x11
+ 891 0299 0E010000 		.4byte	0x10e
+ 892 029d FD000000 		.4byte	.LLST9
+ 893 02a1 13       		.uleb128 0x13
+ 894 02a2 6C000000 		.4byte	.LVL17
+ 895 02a6 F3070000 		.4byte	0x7f3
+ 896 02aa B4020000 		.4byte	0x2b4
+ 897 02ae 14       		.uleb128 0x14
+ 898 02af 01       		.uleb128 0x1
+ 899 02b0 50       		.byte	0x50
+ 900 02b1 01       		.uleb128 0x1
+ 901 02b2 30       		.byte	0x30
+ 902 02b3 00       		.byte	0
+ 903 02b4 13       		.uleb128 0x13
+ 904 02b5 72000000 		.4byte	.LVL18
+ 905 02b9 FE070000 		.4byte	0x7fe
+ 906 02bd C7020000 		.4byte	0x2c7
+ 907 02c1 14       		.uleb128 0x14
+ 908 02c2 01       		.uleb128 0x1
+ 909 02c3 50       		.byte	0x50
+ 910 02c4 01       		.uleb128 0x1
+ 911 02c5 31       		.byte	0x31
+ 912 02c6 00       		.byte	0
+ 913 02c7 13       		.uleb128 0x13
+ 914 02c8 78000000 		.4byte	.LVL19
+ 915 02cc 09080000 		.4byte	0x809
+ 916 02d0 DA020000 		.4byte	0x2da
+ 917 02d4 14       		.uleb128 0x14
+ 918 02d5 01       		.uleb128 0x1
+ 919 02d6 50       		.byte	0x50
+ 920 02d7 01       		.uleb128 0x1
+ 921 02d8 31       		.byte	0x31
+ 922 02d9 00       		.byte	0
+ 923 02da 13       		.uleb128 0x13
+ 924 02db 7E000000 		.4byte	.LVL20
+ 925 02df FE070000 		.4byte	0x7fe
+ 926 02e3 ED020000 		.4byte	0x2ed
+ 927 02e7 14       		.uleb128 0x14
+ 928 02e8 01       		.uleb128 0x1
+ 929 02e9 50       		.byte	0x50
+ 930 02ea 01       		.uleb128 0x1
+ 931 02eb 31       		.byte	0x31
+ 932 02ec 00       		.byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 23
+
+
+ 933 02ed 13       		.uleb128 0x13
+ 934 02ee 86000000 		.4byte	.LVL21
+ 935 02f2 09080000 		.4byte	0x809
+ 936 02f6 00030000 		.4byte	0x300
+ 937 02fa 14       		.uleb128 0x14
+ 938 02fb 01       		.uleb128 0x1
+ 939 02fc 50       		.byte	0x50
+ 940 02fd 01       		.uleb128 0x1
+ 941 02fe 30       		.byte	0x30
+ 942 02ff 00       		.byte	0
+ 943 0300 13       		.uleb128 0x13
+ 944 0301 92000000 		.4byte	.LVL24
+ 945 0305 FE070000 		.4byte	0x7fe
+ 946 0309 13030000 		.4byte	0x313
+ 947 030d 14       		.uleb128 0x14
+ 948 030e 01       		.uleb128 0x1
+ 949 030f 50       		.byte	0x50
+ 950 0310 01       		.uleb128 0x1
+ 951 0311 31       		.byte	0x31
+ 952 0312 00       		.byte	0
+ 953 0313 13       		.uleb128 0x13
+ 954 0314 A2000000 		.4byte	.LVL25
+ 955 0318 F3070000 		.4byte	0x7f3
+ 956 031c 26030000 		.4byte	0x326
+ 957 0320 14       		.uleb128 0x14
+ 958 0321 01       		.uleb128 0x1
+ 959 0322 50       		.byte	0x50
+ 960 0323 01       		.uleb128 0x1
+ 961 0324 31       		.byte	0x31
+ 962 0325 00       		.byte	0
+ 963 0326 13       		.uleb128 0x13
+ 964 0327 AA000000 		.4byte	.LVL26
+ 965 032b F3070000 		.4byte	0x7f3
+ 966 032f 39030000 		.4byte	0x339
+ 967 0333 14       		.uleb128 0x14
+ 968 0334 01       		.uleb128 0x1
+ 969 0335 50       		.byte	0x50
+ 970 0336 01       		.uleb128 0x1
+ 971 0337 30       		.byte	0x30
+ 972 0338 00       		.byte	0
+ 973 0339 15       		.uleb128 0x15
+ 974 033a B2000000 		.4byte	.LVL28
+ 975 033e FE070000 		.4byte	0x7fe
+ 976 0342 14       		.uleb128 0x14
+ 977 0343 01       		.uleb128 0x1
+ 978 0344 50       		.byte	0x50
+ 979 0345 01       		.uleb128 0x1
+ 980 0346 32       		.byte	0x32
+ 981 0347 00       		.byte	0
+ 982 0348 00       		.byte	0
+ 983 0349 00       		.byte	0
+ 984 034a 00       		.byte	0
+ 985 034b 00       		.byte	0
+ 986 034c 0D       		.uleb128 0xd
+ 987 034d BC000000 		.4byte	0xbc
+ 988 0351 BC000000 		.4byte	.LBB48
+ 989 0355 5C000000 		.4byte	.LBE48-.LBB48
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 24
+
+
+ 990 0359 01       		.byte	0x1
+ 991 035a B1       		.byte	0xb1
+ 992 035b 55040000 		.4byte	0x455
+ 993 035f 16       		.uleb128 0x16
+ 994 0360 D1000000 		.4byte	0xd1
+ 995 0364 0F       		.uleb128 0xf
+ 996 0365 C8000000 		.4byte	0xc8
+ 997 0369 11010000 		.4byte	.LLST10
+ 998 036d 10       		.uleb128 0x10
+ 999 036e BC000000 		.4byte	.LBB49
+ 1000 0372 5C000000 		.4byte	.LBE49-.LBB49
+ 1001 0376 19       		.uleb128 0x19
+ 1002 0377 DC000000 		.4byte	0xdc
+ 1003 037b 11       		.uleb128 0x11
+ 1004 037c E5000000 		.4byte	0xe5
+ 1005 0380 3C010000 		.4byte	.LLST11
+ 1006 0384 17       		.uleb128 0x17
+ 1007 0385 F7000000 		.4byte	0xf7
+ 1008 0389 C2000000 		.4byte	.LBB50
+ 1009 038d 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1010 0391 01       		.byte	0x1
+ 1011 0392 95       		.byte	0x95
+ 1012 0393 0F       		.uleb128 0xf
+ 1013 0394 03010000 		.4byte	0x103
+ 1014 0398 4F010000 		.4byte	.LLST12
+ 1015 039c 18       		.uleb128 0x18
+ 1016 039d 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 1017 03a1 11       		.uleb128 0x11
+ 1018 03a2 0E010000 		.4byte	0x10e
+ 1019 03a6 6D010000 		.4byte	.LLST13
+ 1020 03aa 13       		.uleb128 0x13
+ 1021 03ab C8000000 		.4byte	.LVL33
+ 1022 03af F3070000 		.4byte	0x7f3
+ 1023 03b3 BD030000 		.4byte	0x3bd
+ 1024 03b7 14       		.uleb128 0x14
+ 1025 03b8 01       		.uleb128 0x1
+ 1026 03b9 50       		.byte	0x50
+ 1027 03ba 01       		.uleb128 0x1
+ 1028 03bb 30       		.byte	0x30
+ 1029 03bc 00       		.byte	0
+ 1030 03bd 13       		.uleb128 0x13
+ 1031 03be CE000000 		.4byte	.LVL34
+ 1032 03c2 FE070000 		.4byte	0x7fe
+ 1033 03c6 D0030000 		.4byte	0x3d0
+ 1034 03ca 14       		.uleb128 0x14
+ 1035 03cb 01       		.uleb128 0x1
+ 1036 03cc 50       		.byte	0x50
+ 1037 03cd 01       		.uleb128 0x1
+ 1038 03ce 31       		.byte	0x31
+ 1039 03cf 00       		.byte	0
+ 1040 03d0 13       		.uleb128 0x13
+ 1041 03d1 D4000000 		.4byte	.LVL35
+ 1042 03d5 09080000 		.4byte	0x809
+ 1043 03d9 E3030000 		.4byte	0x3e3
+ 1044 03dd 14       		.uleb128 0x14
+ 1045 03de 01       		.uleb128 0x1
+ 1046 03df 50       		.byte	0x50
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 25
+
+
+ 1047 03e0 01       		.uleb128 0x1
+ 1048 03e1 31       		.byte	0x31
+ 1049 03e2 00       		.byte	0
+ 1050 03e3 13       		.uleb128 0x13
+ 1051 03e4 DA000000 		.4byte	.LVL36
+ 1052 03e8 FE070000 		.4byte	0x7fe
+ 1053 03ec F6030000 		.4byte	0x3f6
+ 1054 03f0 14       		.uleb128 0x14
+ 1055 03f1 01       		.uleb128 0x1
+ 1056 03f2 50       		.byte	0x50
+ 1057 03f3 01       		.uleb128 0x1
+ 1058 03f4 31       		.byte	0x31
+ 1059 03f5 00       		.byte	0
+ 1060 03f6 13       		.uleb128 0x13
+ 1061 03f7 E2000000 		.4byte	.LVL37
+ 1062 03fb 09080000 		.4byte	0x809
+ 1063 03ff 09040000 		.4byte	0x409
+ 1064 0403 14       		.uleb128 0x14
+ 1065 0404 01       		.uleb128 0x1
+ 1066 0405 50       		.byte	0x50
+ 1067 0406 01       		.uleb128 0x1
+ 1068 0407 30       		.byte	0x30
+ 1069 0408 00       		.byte	0
+ 1070 0409 13       		.uleb128 0x13
+ 1071 040a EE000000 		.4byte	.LVL40
+ 1072 040e FE070000 		.4byte	0x7fe
+ 1073 0412 1C040000 		.4byte	0x41c
+ 1074 0416 14       		.uleb128 0x14
+ 1075 0417 01       		.uleb128 0x1
+ 1076 0418 50       		.byte	0x50
+ 1077 0419 01       		.uleb128 0x1
+ 1078 041a 31       		.byte	0x31
+ 1079 041b 00       		.byte	0
+ 1080 041c 13       		.uleb128 0x13
+ 1081 041d FE000000 		.4byte	.LVL41
+ 1082 0421 F3070000 		.4byte	0x7f3
+ 1083 0425 2F040000 		.4byte	0x42f
+ 1084 0429 14       		.uleb128 0x14
+ 1085 042a 01       		.uleb128 0x1
+ 1086 042b 50       		.byte	0x50
+ 1087 042c 01       		.uleb128 0x1
+ 1088 042d 31       		.byte	0x31
+ 1089 042e 00       		.byte	0
+ 1090 042f 13       		.uleb128 0x13
+ 1091 0430 06010000 		.4byte	.LVL42
+ 1092 0434 F3070000 		.4byte	0x7f3
+ 1093 0438 42040000 		.4byte	0x442
+ 1094 043c 14       		.uleb128 0x14
+ 1095 043d 01       		.uleb128 0x1
+ 1096 043e 50       		.byte	0x50
+ 1097 043f 01       		.uleb128 0x1
+ 1098 0440 30       		.byte	0x30
+ 1099 0441 00       		.byte	0
+ 1100 0442 15       		.uleb128 0x15
+ 1101 0443 0E010000 		.4byte	.LVL44
+ 1102 0447 FE070000 		.4byte	0x7fe
+ 1103 044b 14       		.uleb128 0x14
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 26
+
+
+ 1104 044c 01       		.uleb128 0x1
+ 1105 044d 50       		.byte	0x50
+ 1106 044e 01       		.uleb128 0x1
+ 1107 044f 32       		.byte	0x32
+ 1108 0450 00       		.byte	0
+ 1109 0451 00       		.byte	0
+ 1110 0452 00       		.byte	0
+ 1111 0453 00       		.byte	0
+ 1112 0454 00       		.byte	0
+ 1113 0455 0D       		.uleb128 0xd
+ 1114 0456 BC000000 		.4byte	0xbc
+ 1115 045a 18010000 		.4byte	.LBB54
+ 1116 045e 56000000 		.4byte	.LBE54-.LBB54
+ 1117 0462 01       		.byte	0x1
+ 1118 0463 B3       		.byte	0xb3
+ 1119 0464 5E050000 		.4byte	0x55e
+ 1120 0468 16       		.uleb128 0x16
+ 1121 0469 D1000000 		.4byte	0xd1
+ 1122 046d 0F       		.uleb128 0xf
+ 1123 046e C8000000 		.4byte	0xc8
+ 1124 0472 81010000 		.4byte	.LLST14
+ 1125 0476 10       		.uleb128 0x10
+ 1126 0477 18010000 		.4byte	.LBB55
+ 1127 047b 56000000 		.4byte	.LBE55-.LBB55
+ 1128 047f 19       		.uleb128 0x19
+ 1129 0480 DC000000 		.4byte	0xdc
+ 1130 0484 11       		.uleb128 0x11
+ 1131 0485 E5000000 		.4byte	0xe5
+ 1132 0489 AC010000 		.4byte	.LLST15
+ 1133 048d 17       		.uleb128 0x17
+ 1134 048e F7000000 		.4byte	0xf7
+ 1135 0492 1E010000 		.4byte	.LBB56
+ 1136 0496 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 1137 049a 01       		.byte	0x1
+ 1138 049b 95       		.byte	0x95
+ 1139 049c 0F       		.uleb128 0xf
+ 1140 049d 03010000 		.4byte	0x103
+ 1141 04a1 BF010000 		.4byte	.LLST16
+ 1142 04a5 18       		.uleb128 0x18
+ 1143 04a6 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 1144 04aa 11       		.uleb128 0x11
+ 1145 04ab 0E010000 		.4byte	0x10e
+ 1146 04af DD010000 		.4byte	.LLST17
+ 1147 04b3 13       		.uleb128 0x13
+ 1148 04b4 24010000 		.4byte	.LVL49
+ 1149 04b8 F3070000 		.4byte	0x7f3
+ 1150 04bc C6040000 		.4byte	0x4c6
+ 1151 04c0 14       		.uleb128 0x14
+ 1152 04c1 01       		.uleb128 0x1
+ 1153 04c2 50       		.byte	0x50
+ 1154 04c3 01       		.uleb128 0x1
+ 1155 04c4 30       		.byte	0x30
+ 1156 04c5 00       		.byte	0
+ 1157 04c6 13       		.uleb128 0x13
+ 1158 04c7 2A010000 		.4byte	.LVL50
+ 1159 04cb FE070000 		.4byte	0x7fe
+ 1160 04cf D9040000 		.4byte	0x4d9
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 27
+
+
+ 1161 04d3 14       		.uleb128 0x14
+ 1162 04d4 01       		.uleb128 0x1
+ 1163 04d5 50       		.byte	0x50
+ 1164 04d6 01       		.uleb128 0x1
+ 1165 04d7 31       		.byte	0x31
+ 1166 04d8 00       		.byte	0
+ 1167 04d9 13       		.uleb128 0x13
+ 1168 04da 30010000 		.4byte	.LVL51
+ 1169 04de 09080000 		.4byte	0x809
+ 1170 04e2 EC040000 		.4byte	0x4ec
+ 1171 04e6 14       		.uleb128 0x14
+ 1172 04e7 01       		.uleb128 0x1
+ 1173 04e8 50       		.byte	0x50
+ 1174 04e9 01       		.uleb128 0x1
+ 1175 04ea 31       		.byte	0x31
+ 1176 04eb 00       		.byte	0
+ 1177 04ec 13       		.uleb128 0x13
+ 1178 04ed 36010000 		.4byte	.LVL52
+ 1179 04f1 FE070000 		.4byte	0x7fe
+ 1180 04f5 FF040000 		.4byte	0x4ff
+ 1181 04f9 14       		.uleb128 0x14
+ 1182 04fa 01       		.uleb128 0x1
+ 1183 04fb 50       		.byte	0x50
+ 1184 04fc 01       		.uleb128 0x1
+ 1185 04fd 31       		.byte	0x31
+ 1186 04fe 00       		.byte	0
+ 1187 04ff 13       		.uleb128 0x13
+ 1188 0500 3E010000 		.4byte	.LVL53
+ 1189 0504 09080000 		.4byte	0x809
+ 1190 0508 12050000 		.4byte	0x512
+ 1191 050c 14       		.uleb128 0x14
+ 1192 050d 01       		.uleb128 0x1
+ 1193 050e 50       		.byte	0x50
+ 1194 050f 01       		.uleb128 0x1
+ 1195 0510 30       		.byte	0x30
+ 1196 0511 00       		.byte	0
+ 1197 0512 13       		.uleb128 0x13
+ 1198 0513 4A010000 		.4byte	.LVL56
+ 1199 0517 FE070000 		.4byte	0x7fe
+ 1200 051b 25050000 		.4byte	0x525
+ 1201 051f 14       		.uleb128 0x14
+ 1202 0520 01       		.uleb128 0x1
+ 1203 0521 50       		.byte	0x50
+ 1204 0522 01       		.uleb128 0x1
+ 1205 0523 31       		.byte	0x31
+ 1206 0524 00       		.byte	0
+ 1207 0525 13       		.uleb128 0x13
+ 1208 0526 5A010000 		.4byte	.LVL57
+ 1209 052a F3070000 		.4byte	0x7f3
+ 1210 052e 38050000 		.4byte	0x538
+ 1211 0532 14       		.uleb128 0x14
+ 1212 0533 01       		.uleb128 0x1
+ 1213 0534 50       		.byte	0x50
+ 1214 0535 01       		.uleb128 0x1
+ 1215 0536 31       		.byte	0x31
+ 1216 0537 00       		.byte	0
+ 1217 0538 13       		.uleb128 0x13
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 28
+
+
+ 1218 0539 62010000 		.4byte	.LVL58
+ 1219 053d F3070000 		.4byte	0x7f3
+ 1220 0541 4B050000 		.4byte	0x54b
+ 1221 0545 14       		.uleb128 0x14
+ 1222 0546 01       		.uleb128 0x1
+ 1223 0547 50       		.byte	0x50
+ 1224 0548 01       		.uleb128 0x1
+ 1225 0549 30       		.byte	0x30
+ 1226 054a 00       		.byte	0
+ 1227 054b 15       		.uleb128 0x15
+ 1228 054c 6A010000 		.4byte	.LVL60
+ 1229 0550 FE070000 		.4byte	0x7fe
+ 1230 0554 14       		.uleb128 0x14
+ 1231 0555 01       		.uleb128 0x1
+ 1232 0556 50       		.byte	0x50
+ 1233 0557 01       		.uleb128 0x1
+ 1234 0558 32       		.byte	0x32
+ 1235 0559 00       		.byte	0
+ 1236 055a 00       		.byte	0
+ 1237 055b 00       		.byte	0
+ 1238 055c 00       		.byte	0
+ 1239 055d 00       		.byte	0
+ 1240 055e 0D       		.uleb128 0xd
+ 1241 055f BC000000 		.4byte	0xbc
+ 1242 0563 6E010000 		.4byte	.LBB60
+ 1243 0567 58000000 		.4byte	.LBE60-.LBB60
+ 1244 056b 01       		.byte	0x1
+ 1245 056c B4       		.byte	0xb4
+ 1246 056d 6B060000 		.4byte	0x66b
+ 1247 0571 16       		.uleb128 0x16
+ 1248 0572 D1000000 		.4byte	0xd1
+ 1249 0576 16       		.uleb128 0x16
+ 1250 0577 C8000000 		.4byte	0xc8
+ 1251 057b 10       		.uleb128 0x10
+ 1252 057c 6E010000 		.4byte	.LBB61
+ 1253 0580 58000000 		.4byte	.LBE61-.LBB61
+ 1254 0584 11       		.uleb128 0x11
+ 1255 0585 DC000000 		.4byte	0xdc
+ 1256 0589 F1010000 		.4byte	.LLST18
+ 1257 058d 11       		.uleb128 0x11
+ 1258 058e E5000000 		.4byte	0xe5
+ 1259 0592 11020000 		.4byte	.LLST19
+ 1260 0596 12       		.uleb128 0x12
+ 1261 0597 F7000000 		.4byte	0xf7
+ 1262 059b 76010000 		.4byte	.LBB62
+ 1263 059f 50000000 		.4byte	.LBE62-.LBB62
+ 1264 05a3 01       		.byte	0x1
+ 1265 05a4 95       		.byte	0x95
+ 1266 05a5 0F       		.uleb128 0xf
+ 1267 05a6 03010000 		.4byte	0x103
+ 1268 05aa 24020000 		.4byte	.LLST20
+ 1269 05ae 10       		.uleb128 0x10
+ 1270 05af 76010000 		.4byte	.LBB63
+ 1271 05b3 50000000 		.4byte	.LBE63-.LBB63
+ 1272 05b7 11       		.uleb128 0x11
+ 1273 05b8 0E010000 		.4byte	0x10e
+ 1274 05bc 42020000 		.4byte	.LLST21
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 29
+
+
+ 1275 05c0 13       		.uleb128 0x13
+ 1276 05c1 7C010000 		.4byte	.LVL64
+ 1277 05c5 F3070000 		.4byte	0x7f3
+ 1278 05c9 D3050000 		.4byte	0x5d3
+ 1279 05cd 14       		.uleb128 0x14
+ 1280 05ce 01       		.uleb128 0x1
+ 1281 05cf 50       		.byte	0x50
+ 1282 05d0 01       		.uleb128 0x1
+ 1283 05d1 30       		.byte	0x30
+ 1284 05d2 00       		.byte	0
+ 1285 05d3 13       		.uleb128 0x13
+ 1286 05d4 82010000 		.4byte	.LVL65
+ 1287 05d8 FE070000 		.4byte	0x7fe
+ 1288 05dc E6050000 		.4byte	0x5e6
+ 1289 05e0 14       		.uleb128 0x14
+ 1290 05e1 01       		.uleb128 0x1
+ 1291 05e2 50       		.byte	0x50
+ 1292 05e3 01       		.uleb128 0x1
+ 1293 05e4 31       		.byte	0x31
+ 1294 05e5 00       		.byte	0
+ 1295 05e6 13       		.uleb128 0x13
+ 1296 05e7 88010000 		.4byte	.LVL66
+ 1297 05eb 09080000 		.4byte	0x809
+ 1298 05ef F9050000 		.4byte	0x5f9
+ 1299 05f3 14       		.uleb128 0x14
+ 1300 05f4 01       		.uleb128 0x1
+ 1301 05f5 50       		.byte	0x50
+ 1302 05f6 01       		.uleb128 0x1
+ 1303 05f7 31       		.byte	0x31
+ 1304 05f8 00       		.byte	0
+ 1305 05f9 13       		.uleb128 0x13
+ 1306 05fa 8E010000 		.4byte	.LVL67
+ 1307 05fe FE070000 		.4byte	0x7fe
+ 1308 0602 0C060000 		.4byte	0x60c
+ 1309 0606 14       		.uleb128 0x14
+ 1310 0607 01       		.uleb128 0x1
+ 1311 0608 50       		.byte	0x50
+ 1312 0609 01       		.uleb128 0x1
+ 1313 060a 31       		.byte	0x31
+ 1314 060b 00       		.byte	0
+ 1315 060c 13       		.uleb128 0x13
+ 1316 060d 96010000 		.4byte	.LVL68
+ 1317 0611 09080000 		.4byte	0x809
+ 1318 0615 1F060000 		.4byte	0x61f
+ 1319 0619 14       		.uleb128 0x14
+ 1320 061a 01       		.uleb128 0x1
+ 1321 061b 50       		.byte	0x50
+ 1322 061c 01       		.uleb128 0x1
+ 1323 061d 30       		.byte	0x30
+ 1324 061e 00       		.byte	0
+ 1325 061f 13       		.uleb128 0x13
+ 1326 0620 A2010000 		.4byte	.LVL71
+ 1327 0624 FE070000 		.4byte	0x7fe
+ 1328 0628 32060000 		.4byte	0x632
+ 1329 062c 14       		.uleb128 0x14
+ 1330 062d 01       		.uleb128 0x1
+ 1331 062e 50       		.byte	0x50
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 30
+
+
+ 1332 062f 01       		.uleb128 0x1
+ 1333 0630 31       		.byte	0x31
+ 1334 0631 00       		.byte	0
+ 1335 0632 13       		.uleb128 0x13
+ 1336 0633 B2010000 		.4byte	.LVL72
+ 1337 0637 F3070000 		.4byte	0x7f3
+ 1338 063b 45060000 		.4byte	0x645
+ 1339 063f 14       		.uleb128 0x14
+ 1340 0640 01       		.uleb128 0x1
+ 1341 0641 50       		.byte	0x50
+ 1342 0642 01       		.uleb128 0x1
+ 1343 0643 31       		.byte	0x31
+ 1344 0644 00       		.byte	0
+ 1345 0645 13       		.uleb128 0x13
+ 1346 0646 BA010000 		.4byte	.LVL73
+ 1347 064a F3070000 		.4byte	0x7f3
+ 1348 064e 58060000 		.4byte	0x658
+ 1349 0652 14       		.uleb128 0x14
+ 1350 0653 01       		.uleb128 0x1
+ 1351 0654 50       		.byte	0x50
+ 1352 0655 01       		.uleb128 0x1
+ 1353 0656 30       		.byte	0x30
+ 1354 0657 00       		.byte	0
+ 1355 0658 15       		.uleb128 0x15
+ 1356 0659 C0010000 		.4byte	.LVL74
+ 1357 065d FE070000 		.4byte	0x7fe
+ 1358 0661 14       		.uleb128 0x14
+ 1359 0662 01       		.uleb128 0x1
+ 1360 0663 50       		.byte	0x50
+ 1361 0664 01       		.uleb128 0x1
+ 1362 0665 32       		.byte	0x32
+ 1363 0666 00       		.byte	0
+ 1364 0667 00       		.byte	0
+ 1365 0668 00       		.byte	0
+ 1366 0669 00       		.byte	0
+ 1367 066a 00       		.byte	0
+ 1368 066b 12       		.uleb128 0x12
+ 1369 066c BC000000 		.4byte	0xbc
+ 1370 0670 C6010000 		.4byte	.LBB64
+ 1371 0674 56000000 		.4byte	.LBE64-.LBB64
+ 1372 0678 01       		.byte	0x1
+ 1373 0679 BD       		.byte	0xbd
+ 1374 067a 16       		.uleb128 0x16
+ 1375 067b D1000000 		.4byte	0xd1
+ 1376 067f 0F       		.uleb128 0xf
+ 1377 0680 C8000000 		.4byte	0xc8
+ 1378 0684 56020000 		.4byte	.LLST22
+ 1379 0688 10       		.uleb128 0x10
+ 1380 0689 C6010000 		.4byte	.LBB65
+ 1381 068d 56000000 		.4byte	.LBE65-.LBB65
+ 1382 0691 11       		.uleb128 0x11
+ 1383 0692 DC000000 		.4byte	0xdc
+ 1384 0696 91020000 		.4byte	.LLST23
+ 1385 069a 11       		.uleb128 0x11
+ 1386 069b E5000000 		.4byte	0xe5
+ 1387 069f A5020000 		.4byte	.LLST24
+ 1388 06a3 17       		.uleb128 0x17
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 31
+
+
+ 1389 06a4 F7000000 		.4byte	0xf7
+ 1390 06a8 CC010000 		.4byte	.LBB66
+ 1391 06ac 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 1392 06b0 01       		.byte	0x1
+ 1393 06b1 95       		.byte	0x95
+ 1394 06b2 0F       		.uleb128 0xf
+ 1395 06b3 03010000 		.4byte	0x103
+ 1396 06b7 B8020000 		.4byte	.LLST25
+ 1397 06bb 18       		.uleb128 0x18
+ 1398 06bc 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 1399 06c0 11       		.uleb128 0x11
+ 1400 06c1 0E010000 		.4byte	0x10e
+ 1401 06c5 D6020000 		.4byte	.LLST26
+ 1402 06c9 13       		.uleb128 0x13
+ 1403 06ca D2010000 		.4byte	.LVL79
+ 1404 06ce F3070000 		.4byte	0x7f3
+ 1405 06d2 DC060000 		.4byte	0x6dc
+ 1406 06d6 14       		.uleb128 0x14
+ 1407 06d7 01       		.uleb128 0x1
+ 1408 06d8 50       		.byte	0x50
+ 1409 06d9 01       		.uleb128 0x1
+ 1410 06da 30       		.byte	0x30
+ 1411 06db 00       		.byte	0
+ 1412 06dc 13       		.uleb128 0x13
+ 1413 06dd D8010000 		.4byte	.LVL80
+ 1414 06e1 FE070000 		.4byte	0x7fe
+ 1415 06e5 EF060000 		.4byte	0x6ef
+ 1416 06e9 14       		.uleb128 0x14
+ 1417 06ea 01       		.uleb128 0x1
+ 1418 06eb 50       		.byte	0x50
+ 1419 06ec 01       		.uleb128 0x1
+ 1420 06ed 31       		.byte	0x31
+ 1421 06ee 00       		.byte	0
+ 1422 06ef 13       		.uleb128 0x13
+ 1423 06f0 DE010000 		.4byte	.LVL81
+ 1424 06f4 09080000 		.4byte	0x809
+ 1425 06f8 02070000 		.4byte	0x702
+ 1426 06fc 14       		.uleb128 0x14
+ 1427 06fd 01       		.uleb128 0x1
+ 1428 06fe 50       		.byte	0x50
+ 1429 06ff 01       		.uleb128 0x1
+ 1430 0700 31       		.byte	0x31
+ 1431 0701 00       		.byte	0
+ 1432 0702 13       		.uleb128 0x13
+ 1433 0703 E4010000 		.4byte	.LVL82
+ 1434 0707 FE070000 		.4byte	0x7fe
+ 1435 070b 15070000 		.4byte	0x715
+ 1436 070f 14       		.uleb128 0x14
+ 1437 0710 01       		.uleb128 0x1
+ 1438 0711 50       		.byte	0x50
+ 1439 0712 01       		.uleb128 0x1
+ 1440 0713 31       		.byte	0x31
+ 1441 0714 00       		.byte	0
+ 1442 0715 13       		.uleb128 0x13
+ 1443 0716 EC010000 		.4byte	.LVL83
+ 1444 071a 09080000 		.4byte	0x809
+ 1445 071e 28070000 		.4byte	0x728
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 32
+
+
+ 1446 0722 14       		.uleb128 0x14
+ 1447 0723 01       		.uleb128 0x1
+ 1448 0724 50       		.byte	0x50
+ 1449 0725 01       		.uleb128 0x1
+ 1450 0726 30       		.byte	0x30
+ 1451 0727 00       		.byte	0
+ 1452 0728 13       		.uleb128 0x13
+ 1453 0729 F8010000 		.4byte	.LVL86
+ 1454 072d FE070000 		.4byte	0x7fe
+ 1455 0731 3B070000 		.4byte	0x73b
+ 1456 0735 14       		.uleb128 0x14
+ 1457 0736 01       		.uleb128 0x1
+ 1458 0737 50       		.byte	0x50
+ 1459 0738 01       		.uleb128 0x1
+ 1460 0739 31       		.byte	0x31
+ 1461 073a 00       		.byte	0
+ 1462 073b 13       		.uleb128 0x13
+ 1463 073c 08020000 		.4byte	.LVL87
+ 1464 0740 F3070000 		.4byte	0x7f3
+ 1465 0744 4E070000 		.4byte	0x74e
+ 1466 0748 14       		.uleb128 0x14
+ 1467 0749 01       		.uleb128 0x1
+ 1468 074a 50       		.byte	0x50
+ 1469 074b 01       		.uleb128 0x1
+ 1470 074c 31       		.byte	0x31
+ 1471 074d 00       		.byte	0
+ 1472 074e 13       		.uleb128 0x13
+ 1473 074f 10020000 		.4byte	.LVL88
+ 1474 0753 F3070000 		.4byte	0x7f3
+ 1475 0757 61070000 		.4byte	0x761
+ 1476 075b 14       		.uleb128 0x14
+ 1477 075c 01       		.uleb128 0x1
+ 1478 075d 50       		.byte	0x50
+ 1479 075e 01       		.uleb128 0x1
+ 1480 075f 30       		.byte	0x30
+ 1481 0760 00       		.byte	0
+ 1482 0761 15       		.uleb128 0x15
+ 1483 0762 18020000 		.4byte	.LVL90
+ 1484 0766 FE070000 		.4byte	0x7fe
+ 1485 076a 14       		.uleb128 0x14
+ 1486 076b 01       		.uleb128 0x1
+ 1487 076c 50       		.byte	0x50
+ 1488 076d 01       		.uleb128 0x1
+ 1489 076e 32       		.byte	0x32
+ 1490 076f 00       		.byte	0
+ 1491 0770 00       		.byte	0
+ 1492 0771 00       		.byte	0
+ 1493 0772 00       		.byte	0
+ 1494 0773 00       		.byte	0
+ 1495 0774 00       		.byte	0
+ 1496 0775 1A       		.uleb128 0x1a
+ 1497 0776 44000000 		.4byte	.LASF34
+ 1498 077a 01       		.byte	0x1
+ 1499 077b A4       		.byte	0xa4
+ 1500 077c 76000000 		.4byte	0x76
+ 1501 0780 05       		.uleb128 0x5
+ 1502 0781 03       		.byte	0x3
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 33
+
+
+ 1503 0782 00000000 		.4byte	frame_count
+ 1504 0786 1B       		.uleb128 0x1b
+ 1505 0787 8D000000 		.4byte	0x8d
+ 1506 078b 96070000 		.4byte	0x796
+ 1507 078f 1C       		.uleb128 0x1c
+ 1508 0790 B5000000 		.4byte	0xb5
+ 1509 0794 05       		.byte	0x5
+ 1510 0795 00       		.byte	0
+ 1511 0796 1D       		.uleb128 0x1d
+ 1512 0797 FE000000 		.4byte	.LASF22
+ 1513 079b 01       		.byte	0x1
+ 1514 079c 36       		.byte	0x36
+ 1515 079d 86070000 		.4byte	0x786
+ 1516 07a1 1B       		.uleb128 0x1b
+ 1517 07a2 81000000 		.4byte	0x81
+ 1518 07a6 B1070000 		.4byte	0x7b1
+ 1519 07aa 1C       		.uleb128 0x1c
+ 1520 07ab B5000000 		.4byte	0xb5
+ 1521 07af 00       		.byte	0
+ 1522 07b0 00       		.byte	0
+ 1523 07b1 1D       		.uleb128 0x1d
+ 1524 07b2 59020000 		.4byte	.LASF23
+ 1525 07b6 01       		.byte	0x1
+ 1526 07b7 37       		.byte	0x37
+ 1527 07b8 A1070000 		.4byte	0x7a1
+ 1528 07bc 1B       		.uleb128 0x1b
+ 1529 07bd 6F000000 		.4byte	0x6f
+ 1530 07c1 CC070000 		.4byte	0x7cc
+ 1531 07c5 1C       		.uleb128 0x1c
+ 1532 07c6 B5000000 		.4byte	0xb5
+ 1533 07ca 18       		.byte	0x18
+ 1534 07cb 00       		.byte	0
+ 1535 07cc 1E       		.uleb128 0x1e
+ 1536 07cd 28010000 		.4byte	.LASF24
+ 1537 07d1 01       		.byte	0x1
+ 1538 07d2 A5       		.byte	0xa5
+ 1539 07d3 BC070000 		.4byte	0x7bc
+ 1540 07d7 05       		.uleb128 0x5
+ 1541 07d8 03       		.byte	0x3
+ 1542 07d9 00000000 		.4byte	temp
+ 1543 07dd 1D       		.uleb128 0x1d
+ 1544 07de 50000000 		.4byte	.LASF25
+ 1545 07e2 01       		.byte	0x1
+ 1546 07e3 A7       		.byte	0xa7
+ 1547 07e4 86070000 		.4byte	0x786
+ 1548 07e8 1D       		.uleb128 0x1d
+ 1549 07e9 E5010000 		.4byte	.LASF26
+ 1550 07ed 01       		.byte	0x1
+ 1551 07ee A8       		.byte	0xa8
+ 1552 07ef 86070000 		.4byte	0x786
+ 1553 07f3 1F       		.uleb128 0x1f
+ 1554 07f4 3D010000 		.4byte	.LASF27
+ 1555 07f8 3D010000 		.4byte	.LASF27
+ 1556 07fc 05       		.byte	0x5
+ 1557 07fd 1D       		.byte	0x1d
+ 1558 07fe 1F       		.uleb128 0x1f
+ 1559 07ff 00000000 		.4byte	.LASF28
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 34
+
+
+ 1560 0803 00000000 		.4byte	.LASF28
+ 1561 0807 06       		.byte	0x6
+ 1562 0808 DC       		.byte	0xdc
+ 1563 0809 1F       		.uleb128 0x1f
+ 1564 080a 21020000 		.4byte	.LASF29
+ 1565 080e 21020000 		.4byte	.LASF29
+ 1566 0812 07       		.byte	0x7
+ 1567 0813 1D       		.byte	0x1d
+ 1568 0814 00       		.byte	0
+ 1569              		.section	.debug_abbrev,"",%progbits
+ 1570              	.Ldebug_abbrev0:
+ 1571 0000 01       		.uleb128 0x1
+ 1572 0001 11       		.uleb128 0x11
+ 1573 0002 01       		.byte	0x1
+ 1574 0003 25       		.uleb128 0x25
+ 1575 0004 0E       		.uleb128 0xe
+ 1576 0005 13       		.uleb128 0x13
+ 1577 0006 0B       		.uleb128 0xb
+ 1578 0007 03       		.uleb128 0x3
+ 1579 0008 0E       		.uleb128 0xe
+ 1580 0009 1B       		.uleb128 0x1b
+ 1581 000a 0E       		.uleb128 0xe
+ 1582 000b 55       		.uleb128 0x55
+ 1583 000c 17       		.uleb128 0x17
+ 1584 000d 11       		.uleb128 0x11
+ 1585 000e 01       		.uleb128 0x1
+ 1586 000f 10       		.uleb128 0x10
+ 1587 0010 17       		.uleb128 0x17
+ 1588 0011 00       		.byte	0
+ 1589 0012 00       		.byte	0
+ 1590 0013 02       		.uleb128 0x2
+ 1591 0014 24       		.uleb128 0x24
+ 1592 0015 00       		.byte	0
+ 1593 0016 0B       		.uleb128 0xb
+ 1594 0017 0B       		.uleb128 0xb
+ 1595 0018 3E       		.uleb128 0x3e
+ 1596 0019 0B       		.uleb128 0xb
+ 1597 001a 03       		.uleb128 0x3
+ 1598 001b 0E       		.uleb128 0xe
+ 1599 001c 00       		.byte	0
+ 1600 001d 00       		.byte	0
+ 1601 001e 03       		.uleb128 0x3
+ 1602 001f 16       		.uleb128 0x16
+ 1603 0020 00       		.byte	0
+ 1604 0021 03       		.uleb128 0x3
+ 1605 0022 0E       		.uleb128 0xe
+ 1606 0023 3A       		.uleb128 0x3a
+ 1607 0024 0B       		.uleb128 0xb
+ 1608 0025 3B       		.uleb128 0x3b
+ 1609 0026 0B       		.uleb128 0xb
+ 1610 0027 49       		.uleb128 0x49
+ 1611 0028 13       		.uleb128 0x13
+ 1612 0029 00       		.byte	0
+ 1613 002a 00       		.byte	0
+ 1614 002b 04       		.uleb128 0x4
+ 1615 002c 24       		.uleb128 0x24
+ 1616 002d 00       		.byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 35
+
+
+ 1617 002e 0B       		.uleb128 0xb
+ 1618 002f 0B       		.uleb128 0xb
+ 1619 0030 3E       		.uleb128 0x3e
+ 1620 0031 0B       		.uleb128 0xb
+ 1621 0032 03       		.uleb128 0x3
+ 1622 0033 08       		.uleb128 0x8
+ 1623 0034 00       		.byte	0
+ 1624 0035 00       		.byte	0
+ 1625 0036 05       		.uleb128 0x5
+ 1626 0037 16       		.uleb128 0x16
+ 1627 0038 00       		.byte	0
+ 1628 0039 03       		.uleb128 0x3
+ 1629 003a 0E       		.uleb128 0xe
+ 1630 003b 3A       		.uleb128 0x3a
+ 1631 003c 0B       		.uleb128 0xb
+ 1632 003d 3B       		.uleb128 0x3b
+ 1633 003e 05       		.uleb128 0x5
+ 1634 003f 49       		.uleb128 0x49
+ 1635 0040 13       		.uleb128 0x13
+ 1636 0041 00       		.byte	0
+ 1637 0042 00       		.byte	0
+ 1638 0043 06       		.uleb128 0x6
+ 1639 0044 2E       		.uleb128 0x2e
+ 1640 0045 01       		.byte	0x1
+ 1641 0046 03       		.uleb128 0x3
+ 1642 0047 0E       		.uleb128 0xe
+ 1643 0048 3A       		.uleb128 0x3a
+ 1644 0049 0B       		.uleb128 0xb
+ 1645 004a 3B       		.uleb128 0x3b
+ 1646 004b 0B       		.uleb128 0xb
+ 1647 004c 27       		.uleb128 0x27
+ 1648 004d 19       		.uleb128 0x19
+ 1649 004e 20       		.uleb128 0x20
+ 1650 004f 0B       		.uleb128 0xb
+ 1651 0050 01       		.uleb128 0x1
+ 1652 0051 13       		.uleb128 0x13
+ 1653 0052 00       		.byte	0
+ 1654 0053 00       		.byte	0
+ 1655 0054 07       		.uleb128 0x7
+ 1656 0055 05       		.uleb128 0x5
+ 1657 0056 00       		.byte	0
+ 1658 0057 03       		.uleb128 0x3
+ 1659 0058 08       		.uleb128 0x8
+ 1660 0059 3A       		.uleb128 0x3a
+ 1661 005a 0B       		.uleb128 0xb
+ 1662 005b 3B       		.uleb128 0x3b
+ 1663 005c 0B       		.uleb128 0xb
+ 1664 005d 49       		.uleb128 0x49
+ 1665 005e 13       		.uleb128 0x13
+ 1666 005f 00       		.byte	0
+ 1667 0060 00       		.byte	0
+ 1668 0061 08       		.uleb128 0x8
+ 1669 0062 05       		.uleb128 0x5
+ 1670 0063 00       		.byte	0
+ 1671 0064 03       		.uleb128 0x3
+ 1672 0065 0E       		.uleb128 0xe
+ 1673 0066 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 36
+
+
+ 1674 0067 0B       		.uleb128 0xb
+ 1675 0068 3B       		.uleb128 0x3b
+ 1676 0069 0B       		.uleb128 0xb
+ 1677 006a 49       		.uleb128 0x49
+ 1678 006b 13       		.uleb128 0x13
+ 1679 006c 00       		.byte	0
+ 1680 006d 00       		.byte	0
+ 1681 006e 09       		.uleb128 0x9
+ 1682 006f 34       		.uleb128 0x34
+ 1683 0070 00       		.byte	0
+ 1684 0071 03       		.uleb128 0x3
+ 1685 0072 08       		.uleb128 0x8
+ 1686 0073 3A       		.uleb128 0x3a
+ 1687 0074 0B       		.uleb128 0xb
+ 1688 0075 3B       		.uleb128 0x3b
+ 1689 0076 0B       		.uleb128 0xb
+ 1690 0077 49       		.uleb128 0x49
+ 1691 0078 13       		.uleb128 0x13
+ 1692 0079 00       		.byte	0
+ 1693 007a 00       		.byte	0
+ 1694 007b 0A       		.uleb128 0xa
+ 1695 007c 34       		.uleb128 0x34
+ 1696 007d 00       		.byte	0
+ 1697 007e 03       		.uleb128 0x3
+ 1698 007f 0E       		.uleb128 0xe
+ 1699 0080 3A       		.uleb128 0x3a
+ 1700 0081 0B       		.uleb128 0xb
+ 1701 0082 3B       		.uleb128 0x3b
+ 1702 0083 0B       		.uleb128 0xb
+ 1703 0084 49       		.uleb128 0x49
+ 1704 0085 13       		.uleb128 0x13
+ 1705 0086 00       		.byte	0
+ 1706 0087 00       		.byte	0
+ 1707 0088 0B       		.uleb128 0xb
+ 1708 0089 0F       		.uleb128 0xf
+ 1709 008a 00       		.byte	0
+ 1710 008b 0B       		.uleb128 0xb
+ 1711 008c 0B       		.uleb128 0xb
+ 1712 008d 49       		.uleb128 0x49
+ 1713 008e 13       		.uleb128 0x13
+ 1714 008f 00       		.byte	0
+ 1715 0090 00       		.byte	0
+ 1716 0091 0C       		.uleb128 0xc
+ 1717 0092 2E       		.uleb128 0x2e
+ 1718 0093 01       		.byte	0x1
+ 1719 0094 3F       		.uleb128 0x3f
+ 1720 0095 19       		.uleb128 0x19
+ 1721 0096 03       		.uleb128 0x3
+ 1722 0097 0E       		.uleb128 0xe
+ 1723 0098 3A       		.uleb128 0x3a
+ 1724 0099 0B       		.uleb128 0xb
+ 1725 009a 3B       		.uleb128 0x3b
+ 1726 009b 0B       		.uleb128 0xb
+ 1727 009c 27       		.uleb128 0x27
+ 1728 009d 19       		.uleb128 0x19
+ 1729 009e 11       		.uleb128 0x11
+ 1730 009f 01       		.uleb128 0x1
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 37
+
+
+ 1731 00a0 12       		.uleb128 0x12
+ 1732 00a1 06       		.uleb128 0x6
+ 1733 00a2 40       		.uleb128 0x40
+ 1734 00a3 18       		.uleb128 0x18
+ 1735 00a4 9742     		.uleb128 0x2117
+ 1736 00a6 19       		.uleb128 0x19
+ 1737 00a7 01       		.uleb128 0x1
+ 1738 00a8 13       		.uleb128 0x13
+ 1739 00a9 00       		.byte	0
+ 1740 00aa 00       		.byte	0
+ 1741 00ab 0D       		.uleb128 0xd
+ 1742 00ac 1D       		.uleb128 0x1d
+ 1743 00ad 01       		.byte	0x1
+ 1744 00ae 31       		.uleb128 0x31
+ 1745 00af 13       		.uleb128 0x13
+ 1746 00b0 11       		.uleb128 0x11
+ 1747 00b1 01       		.uleb128 0x1
+ 1748 00b2 12       		.uleb128 0x12
+ 1749 00b3 06       		.uleb128 0x6
+ 1750 00b4 58       		.uleb128 0x58
+ 1751 00b5 0B       		.uleb128 0xb
+ 1752 00b6 59       		.uleb128 0x59
+ 1753 00b7 0B       		.uleb128 0xb
+ 1754 00b8 01       		.uleb128 0x1
+ 1755 00b9 13       		.uleb128 0x13
+ 1756 00ba 00       		.byte	0
+ 1757 00bb 00       		.byte	0
+ 1758 00bc 0E       		.uleb128 0xe
+ 1759 00bd 05       		.uleb128 0x5
+ 1760 00be 00       		.byte	0
+ 1761 00bf 31       		.uleb128 0x31
+ 1762 00c0 13       		.uleb128 0x13
+ 1763 00c1 1C       		.uleb128 0x1c
+ 1764 00c2 0B       		.uleb128 0xb
+ 1765 00c3 00       		.byte	0
+ 1766 00c4 00       		.byte	0
+ 1767 00c5 0F       		.uleb128 0xf
+ 1768 00c6 05       		.uleb128 0x5
+ 1769 00c7 00       		.byte	0
+ 1770 00c8 31       		.uleb128 0x31
+ 1771 00c9 13       		.uleb128 0x13
+ 1772 00ca 02       		.uleb128 0x2
+ 1773 00cb 17       		.uleb128 0x17
+ 1774 00cc 00       		.byte	0
+ 1775 00cd 00       		.byte	0
+ 1776 00ce 10       		.uleb128 0x10
+ 1777 00cf 0B       		.uleb128 0xb
+ 1778 00d0 01       		.byte	0x1
+ 1779 00d1 11       		.uleb128 0x11
+ 1780 00d2 01       		.uleb128 0x1
+ 1781 00d3 12       		.uleb128 0x12
+ 1782 00d4 06       		.uleb128 0x6
+ 1783 00d5 00       		.byte	0
+ 1784 00d6 00       		.byte	0
+ 1785 00d7 11       		.uleb128 0x11
+ 1786 00d8 34       		.uleb128 0x34
+ 1787 00d9 00       		.byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 38
+
+
+ 1788 00da 31       		.uleb128 0x31
+ 1789 00db 13       		.uleb128 0x13
+ 1790 00dc 02       		.uleb128 0x2
+ 1791 00dd 17       		.uleb128 0x17
+ 1792 00de 00       		.byte	0
+ 1793 00df 00       		.byte	0
+ 1794 00e0 12       		.uleb128 0x12
+ 1795 00e1 1D       		.uleb128 0x1d
+ 1796 00e2 01       		.byte	0x1
+ 1797 00e3 31       		.uleb128 0x31
+ 1798 00e4 13       		.uleb128 0x13
+ 1799 00e5 11       		.uleb128 0x11
+ 1800 00e6 01       		.uleb128 0x1
+ 1801 00e7 12       		.uleb128 0x12
+ 1802 00e8 06       		.uleb128 0x6
+ 1803 00e9 58       		.uleb128 0x58
+ 1804 00ea 0B       		.uleb128 0xb
+ 1805 00eb 59       		.uleb128 0x59
+ 1806 00ec 0B       		.uleb128 0xb
+ 1807 00ed 00       		.byte	0
+ 1808 00ee 00       		.byte	0
+ 1809 00ef 13       		.uleb128 0x13
+ 1810 00f0 898201   		.uleb128 0x4109
+ 1811 00f3 01       		.byte	0x1
+ 1812 00f4 11       		.uleb128 0x11
+ 1813 00f5 01       		.uleb128 0x1
+ 1814 00f6 31       		.uleb128 0x31
+ 1815 00f7 13       		.uleb128 0x13
+ 1816 00f8 01       		.uleb128 0x1
+ 1817 00f9 13       		.uleb128 0x13
+ 1818 00fa 00       		.byte	0
+ 1819 00fb 00       		.byte	0
+ 1820 00fc 14       		.uleb128 0x14
+ 1821 00fd 8A8201   		.uleb128 0x410a
+ 1822 0100 00       		.byte	0
+ 1823 0101 02       		.uleb128 0x2
+ 1824 0102 18       		.uleb128 0x18
+ 1825 0103 9142     		.uleb128 0x2111
+ 1826 0105 18       		.uleb128 0x18
+ 1827 0106 00       		.byte	0
+ 1828 0107 00       		.byte	0
+ 1829 0108 15       		.uleb128 0x15
+ 1830 0109 898201   		.uleb128 0x4109
+ 1831 010c 01       		.byte	0x1
+ 1832 010d 11       		.uleb128 0x11
+ 1833 010e 01       		.uleb128 0x1
+ 1834 010f 31       		.uleb128 0x31
+ 1835 0110 13       		.uleb128 0x13
+ 1836 0111 00       		.byte	0
+ 1837 0112 00       		.byte	0
+ 1838 0113 16       		.uleb128 0x16
+ 1839 0114 05       		.uleb128 0x5
+ 1840 0115 00       		.byte	0
+ 1841 0116 31       		.uleb128 0x31
+ 1842 0117 13       		.uleb128 0x13
+ 1843 0118 00       		.byte	0
+ 1844 0119 00       		.byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 39
+
+
+ 1845 011a 17       		.uleb128 0x17
+ 1846 011b 1D       		.uleb128 0x1d
+ 1847 011c 01       		.byte	0x1
+ 1848 011d 31       		.uleb128 0x31
+ 1849 011e 13       		.uleb128 0x13
+ 1850 011f 52       		.uleb128 0x52
+ 1851 0120 01       		.uleb128 0x1
+ 1852 0121 55       		.uleb128 0x55
+ 1853 0122 17       		.uleb128 0x17
+ 1854 0123 58       		.uleb128 0x58
+ 1855 0124 0B       		.uleb128 0xb
+ 1856 0125 59       		.uleb128 0x59
+ 1857 0126 0B       		.uleb128 0xb
+ 1858 0127 00       		.byte	0
+ 1859 0128 00       		.byte	0
+ 1860 0129 18       		.uleb128 0x18
+ 1861 012a 0B       		.uleb128 0xb
+ 1862 012b 01       		.byte	0x1
+ 1863 012c 55       		.uleb128 0x55
+ 1864 012d 17       		.uleb128 0x17
+ 1865 012e 00       		.byte	0
+ 1866 012f 00       		.byte	0
+ 1867 0130 19       		.uleb128 0x19
+ 1868 0131 34       		.uleb128 0x34
+ 1869 0132 00       		.byte	0
+ 1870 0133 31       		.uleb128 0x31
+ 1871 0134 13       		.uleb128 0x13
+ 1872 0135 00       		.byte	0
+ 1873 0136 00       		.byte	0
+ 1874 0137 1A       		.uleb128 0x1a
+ 1875 0138 34       		.uleb128 0x34
+ 1876 0139 00       		.byte	0
+ 1877 013a 03       		.uleb128 0x3
+ 1878 013b 0E       		.uleb128 0xe
+ 1879 013c 3A       		.uleb128 0x3a
+ 1880 013d 0B       		.uleb128 0xb
+ 1881 013e 3B       		.uleb128 0x3b
+ 1882 013f 0B       		.uleb128 0xb
+ 1883 0140 49       		.uleb128 0x49
+ 1884 0141 13       		.uleb128 0x13
+ 1885 0142 02       		.uleb128 0x2
+ 1886 0143 18       		.uleb128 0x18
+ 1887 0144 00       		.byte	0
+ 1888 0145 00       		.byte	0
+ 1889 0146 1B       		.uleb128 0x1b
+ 1890 0147 01       		.uleb128 0x1
+ 1891 0148 01       		.byte	0x1
+ 1892 0149 49       		.uleb128 0x49
+ 1893 014a 13       		.uleb128 0x13
+ 1894 014b 01       		.uleb128 0x1
+ 1895 014c 13       		.uleb128 0x13
+ 1896 014d 00       		.byte	0
+ 1897 014e 00       		.byte	0
+ 1898 014f 1C       		.uleb128 0x1c
+ 1899 0150 21       		.uleb128 0x21
+ 1900 0151 00       		.byte	0
+ 1901 0152 49       		.uleb128 0x49
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 40
+
+
+ 1902 0153 13       		.uleb128 0x13
+ 1903 0154 2F       		.uleb128 0x2f
+ 1904 0155 0B       		.uleb128 0xb
+ 1905 0156 00       		.byte	0
+ 1906 0157 00       		.byte	0
+ 1907 0158 1D       		.uleb128 0x1d
+ 1908 0159 34       		.uleb128 0x34
+ 1909 015a 00       		.byte	0
+ 1910 015b 03       		.uleb128 0x3
+ 1911 015c 0E       		.uleb128 0xe
+ 1912 015d 3A       		.uleb128 0x3a
+ 1913 015e 0B       		.uleb128 0xb
+ 1914 015f 3B       		.uleb128 0x3b
+ 1915 0160 0B       		.uleb128 0xb
+ 1916 0161 49       		.uleb128 0x49
+ 1917 0162 13       		.uleb128 0x13
+ 1918 0163 3F       		.uleb128 0x3f
+ 1919 0164 19       		.uleb128 0x19
+ 1920 0165 3C       		.uleb128 0x3c
+ 1921 0166 19       		.uleb128 0x19
+ 1922 0167 00       		.byte	0
+ 1923 0168 00       		.byte	0
+ 1924 0169 1E       		.uleb128 0x1e
+ 1925 016a 34       		.uleb128 0x34
+ 1926 016b 00       		.byte	0
+ 1927 016c 03       		.uleb128 0x3
+ 1928 016d 0E       		.uleb128 0xe
+ 1929 016e 3A       		.uleb128 0x3a
+ 1930 016f 0B       		.uleb128 0xb
+ 1931 0170 3B       		.uleb128 0x3b
+ 1932 0171 0B       		.uleb128 0xb
+ 1933 0172 49       		.uleb128 0x49
+ 1934 0173 13       		.uleb128 0x13
+ 1935 0174 3F       		.uleb128 0x3f
+ 1936 0175 19       		.uleb128 0x19
+ 1937 0176 02       		.uleb128 0x2
+ 1938 0177 18       		.uleb128 0x18
+ 1939 0178 00       		.byte	0
+ 1940 0179 00       		.byte	0
+ 1941 017a 1F       		.uleb128 0x1f
+ 1942 017b 2E       		.uleb128 0x2e
+ 1943 017c 00       		.byte	0
+ 1944 017d 3F       		.uleb128 0x3f
+ 1945 017e 19       		.uleb128 0x19
+ 1946 017f 3C       		.uleb128 0x3c
+ 1947 0180 19       		.uleb128 0x19
+ 1948 0181 6E       		.uleb128 0x6e
+ 1949 0182 0E       		.uleb128 0xe
+ 1950 0183 03       		.uleb128 0x3
+ 1951 0184 0E       		.uleb128 0xe
+ 1952 0185 3A       		.uleb128 0x3a
+ 1953 0186 0B       		.uleb128 0xb
+ 1954 0187 3B       		.uleb128 0x3b
+ 1955 0188 0B       		.uleb128 0xb
+ 1956 0189 00       		.byte	0
+ 1957 018a 00       		.byte	0
+ 1958 018b 00       		.byte	0
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 41
+
+
+ 1959              		.section	.debug_loc,"",%progbits
+ 1960              	.Ldebug_loc0:
+ 1961              	.LLST0:
+ 1962 0000 00000000 		.4byte	.LVL0
+ 1963 0004 5A000000 		.4byte	.LVL13
+ 1964 0008 0600     		.2byte	0x6
+ 1965 000a 03       		.byte	0x3
+ 1966 000b 00000000 		.4byte	frame_count
+ 1967 000f 9F       		.byte	0x9f
+ 1968 0010 5A000000 		.4byte	.LVL13
+ 1969 0014 44020000 		.4byte	.LFE34
+ 1970 0018 0600     		.2byte	0x6
+ 1971 001a 03       		.byte	0x3
+ 1972 001b 01000000 		.4byte	frame_count+1
+ 1973 001f 9F       		.byte	0x9f
+ 1974 0020 00000000 		.4byte	0
+ 1975 0024 00000000 		.4byte	0
+ 1976              	.LLST1:
+ 1977 0028 00000000 		.4byte	.LVL0
+ 1978 002c 5A000000 		.4byte	.LVL13
+ 1979 0030 0200     		.2byte	0x2
+ 1980 0032 30       		.byte	0x30
+ 1981 0033 9F       		.byte	0x9f
+ 1982 0034 5A000000 		.4byte	.LVL13
+ 1983 0038 44020000 		.4byte	.LFE34
+ 1984 003c 0200     		.2byte	0x2
+ 1985 003e 31       		.byte	0x31
+ 1986 003f 9F       		.byte	0x9f
+ 1987 0040 00000000 		.4byte	0
+ 1988 0044 00000000 		.4byte	0
+ 1989              	.LLST2:
+ 1990 0048 0E000000 		.4byte	.LVL1
+ 1991 004c 10000000 		.4byte	.LVL2
+ 1992 0050 0100     		.2byte	0x1
+ 1993 0052 55       		.byte	0x55
+ 1994 0053 00000000 		.4byte	0
+ 1995 0057 00000000 		.4byte	0
+ 1996              	.LLST3:
+ 1997 005b 0E000000 		.4byte	.LVL1
+ 1998 005f 32000000 		.4byte	.LVL8
+ 1999 0063 0100     		.2byte	0x1
+ 2000 0065 55       		.byte	0x55
+ 2001 0066 38000000 		.4byte	.LVL9
+ 2002 006a 5A000000 		.4byte	.LVL13
+ 2003 006e 0100     		.2byte	0x1
+ 2004 0070 55       		.byte	0x55
+ 2005 0071 00000000 		.4byte	0
+ 2006 0075 00000000 		.4byte	0
+ 2007              	.LLST4:
+ 2008 0079 0E000000 		.4byte	.LVL1
+ 2009 007d 10000000 		.4byte	.LVL2
+ 2010 0081 0200     		.2byte	0x2
+ 2011 0083 30       		.byte	0x30
+ 2012 0084 9F       		.byte	0x9f
+ 2013 0085 00000000 		.4byte	0
+ 2014 0089 00000000 		.4byte	0
+ 2015              	.LLST5:
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 42
+
+
+ 2016 008d 60000000 		.4byte	.LVL14
+ 2017 0091 AC000000 		.4byte	.LVL27
+ 2018 0095 0100     		.2byte	0x1
+ 2019 0097 57       		.byte	0x57
+ 2020 0098 AC000000 		.4byte	.LVL27
+ 2021 009c B2000000 		.4byte	.LVL28
+ 2022 00a0 0300     		.2byte	0x3
+ 2023 00a2 77       		.byte	0x77
+ 2024 00a3 7F       		.sleb128 -1
+ 2025 00a4 9F       		.byte	0x9f
+ 2026 00a5 B2000000 		.4byte	.LVL28
+ 2027 00a9 B8000000 		.4byte	.LVL29
+ 2028 00ad 0100     		.2byte	0x1
+ 2029 00af 57       		.byte	0x57
+ 2030 00b0 00000000 		.4byte	0
+ 2031 00b4 00000000 		.4byte	0
+ 2032              	.LLST6:
+ 2033 00b8 5A000000 		.4byte	.LVL13
+ 2034 00bc 60000000 		.4byte	.LVL14
+ 2035 00c0 0200     		.2byte	0x2
+ 2036 00c2 30       		.byte	0x30
+ 2037 00c3 9F       		.byte	0x9f
+ 2038 00c4 00000000 		.4byte	0
+ 2039 00c8 00000000 		.4byte	0
+ 2040              	.LLST7:
+ 2041 00cc 62000000 		.4byte	.LVL15
+ 2042 00d0 66000000 		.4byte	.LVL16
+ 2043 00d4 0100     		.2byte	0x1
+ 2044 00d6 55       		.byte	0x55
+ 2045 00d7 00000000 		.4byte	0
+ 2046 00db 00000000 		.4byte	0
+ 2047              	.LLST8:
+ 2048 00df 62000000 		.4byte	.LVL15
+ 2049 00e3 88000000 		.4byte	.LVL22
+ 2050 00e7 0100     		.2byte	0x1
+ 2051 00e9 55       		.byte	0x55
+ 2052 00ea 8E000000 		.4byte	.LVL23
+ 2053 00ee B2000000 		.4byte	.LVL28
+ 2054 00f2 0100     		.2byte	0x1
+ 2055 00f4 55       		.byte	0x55
+ 2056 00f5 00000000 		.4byte	0
+ 2057 00f9 00000000 		.4byte	0
+ 2058              	.LLST9:
+ 2059 00fd 62000000 		.4byte	.LVL15
+ 2060 0101 66000000 		.4byte	.LVL16
+ 2061 0105 0200     		.2byte	0x2
+ 2062 0107 30       		.byte	0x30
+ 2063 0108 9F       		.byte	0x9f
+ 2064 0109 00000000 		.4byte	0
+ 2065 010d 00000000 		.4byte	0
+ 2066              	.LLST10:
+ 2067 0111 BC000000 		.4byte	.LVL30
+ 2068 0115 08010000 		.4byte	.LVL43
+ 2069 0119 0100     		.2byte	0x1
+ 2070 011b 57       		.byte	0x57
+ 2071 011c 08010000 		.4byte	.LVL43
+ 2072 0120 0E010000 		.4byte	.LVL44
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 43
+
+
+ 2073 0124 0300     		.2byte	0x3
+ 2074 0126 77       		.byte	0x77
+ 2075 0127 7F       		.sleb128 -1
+ 2076 0128 9F       		.byte	0x9f
+ 2077 0129 0E010000 		.4byte	.LVL44
+ 2078 012d 14010000 		.4byte	.LVL45
+ 2079 0131 0100     		.2byte	0x1
+ 2080 0133 57       		.byte	0x57
+ 2081 0134 00000000 		.4byte	0
+ 2082 0138 00000000 		.4byte	0
+ 2083              	.LLST11:
+ 2084 013c BE000000 		.4byte	.LVL31
+ 2085 0140 C2000000 		.4byte	.LVL32
+ 2086 0144 0100     		.2byte	0x1
+ 2087 0146 55       		.byte	0x55
+ 2088 0147 00000000 		.4byte	0
+ 2089 014b 00000000 		.4byte	0
+ 2090              	.LLST12:
+ 2091 014f BE000000 		.4byte	.LVL31
+ 2092 0153 E4000000 		.4byte	.LVL38
+ 2093 0157 0100     		.2byte	0x1
+ 2094 0159 55       		.byte	0x55
+ 2095 015a EA000000 		.4byte	.LVL39
+ 2096 015e 0E010000 		.4byte	.LVL44
+ 2097 0162 0100     		.2byte	0x1
+ 2098 0164 55       		.byte	0x55
+ 2099 0165 00000000 		.4byte	0
+ 2100 0169 00000000 		.4byte	0
+ 2101              	.LLST13:
+ 2102 016d BE000000 		.4byte	.LVL31
+ 2103 0171 C2000000 		.4byte	.LVL32
+ 2104 0175 0200     		.2byte	0x2
+ 2105 0177 30       		.byte	0x30
+ 2106 0178 9F       		.byte	0x9f
+ 2107 0179 00000000 		.4byte	0
+ 2108 017d 00000000 		.4byte	0
+ 2109              	.LLST14:
+ 2110 0181 18010000 		.4byte	.LVL46
+ 2111 0185 64010000 		.4byte	.LVL59
+ 2112 0189 0100     		.2byte	0x1
+ 2113 018b 57       		.byte	0x57
+ 2114 018c 64010000 		.4byte	.LVL59
+ 2115 0190 6A010000 		.4byte	.LVL60
+ 2116 0194 0300     		.2byte	0x3
+ 2117 0196 77       		.byte	0x77
+ 2118 0197 7F       		.sleb128 -1
+ 2119 0198 9F       		.byte	0x9f
+ 2120 0199 6A010000 		.4byte	.LVL60
+ 2121 019d C2010000 		.4byte	.LVL75
+ 2122 01a1 0100     		.2byte	0x1
+ 2123 01a3 57       		.byte	0x57
+ 2124 01a4 00000000 		.4byte	0
+ 2125 01a8 00000000 		.4byte	0
+ 2126              	.LLST15:
+ 2127 01ac 1A010000 		.4byte	.LVL47
+ 2128 01b0 1E010000 		.4byte	.LVL48
+ 2129 01b4 0100     		.2byte	0x1
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 44
+
+
+ 2130 01b6 55       		.byte	0x55
+ 2131 01b7 00000000 		.4byte	0
+ 2132 01bb 00000000 		.4byte	0
+ 2133              	.LLST16:
+ 2134 01bf 1A010000 		.4byte	.LVL47
+ 2135 01c3 40010000 		.4byte	.LVL54
+ 2136 01c7 0100     		.2byte	0x1
+ 2137 01c9 55       		.byte	0x55
+ 2138 01ca 46010000 		.4byte	.LVL55
+ 2139 01ce 6A010000 		.4byte	.LVL60
+ 2140 01d2 0100     		.2byte	0x1
+ 2141 01d4 55       		.byte	0x55
+ 2142 01d5 00000000 		.4byte	0
+ 2143 01d9 00000000 		.4byte	0
+ 2144              	.LLST17:
+ 2145 01dd 1A010000 		.4byte	.LVL47
+ 2146 01e1 1E010000 		.4byte	.LVL48
+ 2147 01e5 0200     		.2byte	0x2
+ 2148 01e7 30       		.byte	0x30
+ 2149 01e8 9F       		.byte	0x9f
+ 2150 01e9 00000000 		.4byte	0
+ 2151 01ed 00000000 		.4byte	0
+ 2152              	.LLST18:
+ 2153 01f1 6E010000 		.4byte	.LVL61
+ 2154 01f5 C0010000 		.4byte	.LVL74
+ 2155 01f9 0200     		.2byte	0x2
+ 2156 01fb 30       		.byte	0x30
+ 2157 01fc 9F       		.byte	0x9f
+ 2158 01fd C0010000 		.4byte	.LVL74
+ 2159 0201 44020000 		.4byte	.LFE34
+ 2160 0205 0200     		.2byte	0x2
+ 2161 0207 31       		.byte	0x31
+ 2162 0208 9F       		.byte	0x9f
+ 2163 0209 00000000 		.4byte	0
+ 2164 020d 00000000 		.4byte	0
+ 2165              	.LLST19:
+ 2166 0211 74010000 		.4byte	.LVL62
+ 2167 0215 76010000 		.4byte	.LVL63
+ 2168 0219 0100     		.2byte	0x1
+ 2169 021b 55       		.byte	0x55
+ 2170 021c 00000000 		.4byte	0
+ 2171 0220 00000000 		.4byte	0
+ 2172              	.LLST20:
+ 2173 0224 74010000 		.4byte	.LVL62
+ 2174 0228 98010000 		.4byte	.LVL69
+ 2175 022c 0100     		.2byte	0x1
+ 2176 022e 55       		.byte	0x55
+ 2177 022f 9E010000 		.4byte	.LVL70
+ 2178 0233 C0010000 		.4byte	.LVL74
+ 2179 0237 0100     		.2byte	0x1
+ 2180 0239 55       		.byte	0x55
+ 2181 023a 00000000 		.4byte	0
+ 2182 023e 00000000 		.4byte	0
+ 2183              	.LLST21:
+ 2184 0242 74010000 		.4byte	.LVL62
+ 2185 0246 76010000 		.4byte	.LVL63
+ 2186 024a 0200     		.2byte	0x2
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 45
+
+
+ 2187 024c 30       		.byte	0x30
+ 2188 024d 9F       		.byte	0x9f
+ 2189 024e 00000000 		.4byte	0
+ 2190 0252 00000000 		.4byte	0
+ 2191              	.LLST22:
+ 2192 0256 C0010000 		.4byte	.LVL74
+ 2193 025a C6010000 		.4byte	.LVL76
+ 2194 025e 0600     		.2byte	0x6
+ 2195 0260 03       		.byte	0x3
+ 2196 0261 00000000 		.4byte	temp
+ 2197 0265 9F       		.byte	0x9f
+ 2198 0266 C6010000 		.4byte	.LVL76
+ 2199 026a 12020000 		.4byte	.LVL89
+ 2200 026e 0100     		.2byte	0x1
+ 2201 0270 57       		.byte	0x57
+ 2202 0271 12020000 		.4byte	.LVL89
+ 2203 0275 18020000 		.4byte	.LVL90
+ 2204 0279 0300     		.2byte	0x3
+ 2205 027b 77       		.byte	0x77
+ 2206 027c 7F       		.sleb128 -1
+ 2207 027d 9F       		.byte	0x9f
+ 2208 027e 18020000 		.4byte	.LVL90
+ 2209 0282 1C020000 		.4byte	.LVL91
+ 2210 0286 0100     		.2byte	0x1
+ 2211 0288 57       		.byte	0x57
+ 2212 0289 00000000 		.4byte	0
+ 2213 028d 00000000 		.4byte	0
+ 2214              	.LLST23:
+ 2215 0291 C0010000 		.4byte	.LVL74
+ 2216 0295 C6010000 		.4byte	.LVL76
+ 2217 0299 0200     		.2byte	0x2
+ 2218 029b 30       		.byte	0x30
+ 2219 029c 9F       		.byte	0x9f
+ 2220 029d 00000000 		.4byte	0
+ 2221 02a1 00000000 		.4byte	0
+ 2222              	.LLST24:
+ 2223 02a5 C8010000 		.4byte	.LVL77
+ 2224 02a9 CC010000 		.4byte	.LVL78
+ 2225 02ad 0100     		.2byte	0x1
+ 2226 02af 55       		.byte	0x55
+ 2227 02b0 00000000 		.4byte	0
+ 2228 02b4 00000000 		.4byte	0
+ 2229              	.LLST25:
+ 2230 02b8 C8010000 		.4byte	.LVL77
+ 2231 02bc EE010000 		.4byte	.LVL84
+ 2232 02c0 0100     		.2byte	0x1
+ 2233 02c2 55       		.byte	0x55
+ 2234 02c3 F4010000 		.4byte	.LVL85
+ 2235 02c7 18020000 		.4byte	.LVL90
+ 2236 02cb 0100     		.2byte	0x1
+ 2237 02cd 55       		.byte	0x55
+ 2238 02ce 00000000 		.4byte	0
+ 2239 02d2 00000000 		.4byte	0
+ 2240              	.LLST26:
+ 2241 02d6 C8010000 		.4byte	.LVL77
+ 2242 02da CC010000 		.4byte	.LVL78
+ 2243 02de 0200     		.2byte	0x2
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 46
+
+
+ 2244 02e0 30       		.byte	0x30
+ 2245 02e1 9F       		.byte	0x9f
+ 2246 02e2 00000000 		.4byte	0
+ 2247 02e6 00000000 		.4byte	0
+ 2248              		.section	.debug_aranges,"",%progbits
+ 2249 0000 1C000000 		.4byte	0x1c
+ 2250 0004 0200     		.2byte	0x2
+ 2251 0006 00000000 		.4byte	.Ldebug_info0
+ 2252 000a 04       		.byte	0x4
+ 2253 000b 00       		.byte	0
+ 2254 000c 0000     		.2byte	0
+ 2255 000e 0000     		.2byte	0
+ 2256 0010 00000000 		.4byte	.LFB34
+ 2257 0014 44020000 		.4byte	.LFE34-.LFB34
+ 2258 0018 00000000 		.4byte	0
+ 2259 001c 00000000 		.4byte	0
+ 2260              		.section	.debug_ranges,"",%progbits
+ 2261              	.Ldebug_ranges0:
+ 2262 0000 66000000 		.4byte	.LBB44
+ 2263 0004 AA000000 		.4byte	.LBE44
+ 2264 0008 AC000000 		.4byte	.LBB47
+ 2265 000c B2000000 		.4byte	.LBE47
+ 2266 0010 00000000 		.4byte	0
+ 2267 0014 00000000 		.4byte	0
+ 2268 0018 C2000000 		.4byte	.LBB50
+ 2269 001c 06010000 		.4byte	.LBE50
+ 2270 0020 08010000 		.4byte	.LBB53
+ 2271 0024 0E010000 		.4byte	.LBE53
+ 2272 0028 00000000 		.4byte	0
+ 2273 002c 00000000 		.4byte	0
+ 2274 0030 1E010000 		.4byte	.LBB56
+ 2275 0034 62010000 		.4byte	.LBE56
+ 2276 0038 64010000 		.4byte	.LBB59
+ 2277 003c 6A010000 		.4byte	.LBE59
+ 2278 0040 00000000 		.4byte	0
+ 2279 0044 00000000 		.4byte	0
+ 2280 0048 CC010000 		.4byte	.LBB66
+ 2281 004c 10020000 		.4byte	.LBE66
+ 2282 0050 12020000 		.4byte	.LBB69
+ 2283 0054 18020000 		.4byte	.LBE69
+ 2284 0058 00000000 		.4byte	0
+ 2285 005c 00000000 		.4byte	0
+ 2286 0060 00000000 		.4byte	.LFB34
+ 2287 0064 44020000 		.4byte	.LFE34
+ 2288 0068 00000000 		.4byte	0
+ 2289 006c 00000000 		.4byte	0
+ 2290              		.section	.debug_line,"",%progbits
+ 2291              	.Ldebug_line0:
+ 2292 0000 60020000 		.section	.debug_str,"MS",%progbits,1
+ 2292      02006F01 
+ 2292      00000201 
+ 2292      FB0E0D00 
+ 2292      01010101 
+ 2293              	.LASF28:
+ 2294 0000 43794465 		.ascii	"CyDelayCycles\000"
+ 2294      6C617943 
+ 2294      79636C65 
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 47
+
+
+ 2294      7300
+ 2295              	.LASF9:
+ 2296 000e 5F5F7569 		.ascii	"__uint8_t\000"
+ 2296      6E74385F 
+ 2296      7400
+ 2297              	.LASF20:
+ 2298 0018 6F757470 		.ascii	"output_to_debugger\000"
+ 2298      75745F74 
+ 2298      6F5F6465 
+ 2298      62756767 
+ 2298      657200
+ 2299              	.LASF18:
+ 2300 002b 636F756E 		.ascii	"count\000"
+ 2300      7400
+ 2301              	.LASF3:
+ 2302 0031 73686F72 		.ascii	"short unsigned int\000"
+ 2302      7420756E 
+ 2302      7369676E 
+ 2302      65642069 
+ 2302      6E7400
+ 2303              	.LASF34:
+ 2304 0044 6672616D 		.ascii	"frame_count\000"
+ 2304      655F636F 
+ 2304      756E7400 
+ 2305              	.LASF25:
+ 2306 0050 43617073 		.ascii	"Capsense_FilteredRawData\000"
+ 2306      656E7365 
+ 2306      5F46696C 
+ 2306      74657265 
+ 2306      64526177 
+ 2307              	.LASF21:
+ 2308 0069 73656E64 		.ascii	"send_debug_byte\000"
+ 2308      5F646562 
+ 2308      75675F62 
+ 2308      79746500 
+ 2309              	.LASF13:
+ 2310 0079 666C6F61 		.ascii	"float\000"
+ 2310      7400
+ 2311              	.LASF19:
+ 2312 007f 64617461 		.ascii	"data\000"
+ 2312      00
+ 2313              	.LASF32:
+ 2314 0084 433A5C55 		.ascii	"C:\\Users\\Public\\touch\\(NowC302)A1_Global_Multi_"
+ 2314      73657273 
+ 2314      5C507562 
+ 2314      6C69635C 
+ 2314      746F7563 
+ 2315 00b3 43726561 		.ascii	"Creator4.1_hawkeye\\CapSense_CSD_P4_Example_WithTun"
+ 2315      746F7234 
+ 2315      2E315F68 
+ 2315      61776B65 
+ 2315      79655C43 
+ 2316 00e5 65723031 		.ascii	"er01.cydsn\000"
+ 2316      2E637964 
+ 2316      736E00
+ 2317              	.LASF1:
+ 2318 00f0 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 48
+
+
+ 2318      676E6564 
+ 2318      20636861 
+ 2318      7200
+ 2319              	.LASF22:
+ 2320 00fe 43617053 		.ascii	"CapSense_sensorBaseline\000"
+ 2320      656E7365 
+ 2320      5F73656E 
+ 2320      736F7242 
+ 2320      6173656C 
+ 2321              	.LASF5:
+ 2322 0116 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2322      20756E73 
+ 2322      69676E65 
+ 2322      6420696E 
+ 2322      7400
+ 2323              	.LASF24:
+ 2324 0128 74656D70 		.ascii	"temp\000"
+ 2324      00
+ 2325              	.LASF11:
+ 2326 012d 75696E74 		.ascii	"uint8\000"
+ 2326      3800
+ 2327              	.LASF31:
+ 2328 0133 6861776B 		.ascii	"hawkeye.c\000"
+ 2328      6579652E 
+ 2328      6300
+ 2329              	.LASF27:
+ 2330 013d 6861776B 		.ascii	"hawkeye_data_Write\000"
+ 2330      6579655F 
+ 2330      64617461 
+ 2330      5F577269 
+ 2330      746500
+ 2331              	.LASF30:
+ 2332 0150 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2332      43313120 
+ 2332      352E342E 
+ 2332      31203230 
+ 2332      31363036 
+ 2333 0183 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 2333      20726576 
+ 2333      6973696F 
+ 2333      6E203233 
+ 2333      37373135 
+ 2334 01b6 33202D66 		.ascii	"3 -ffunction-sections -ffat-lto-objects\000"
+ 2334      66756E63 
+ 2334      74696F6E 
+ 2334      2D736563 
+ 2334      74696F6E 
+ 2335              	.LASF14:
+ 2336 01de 646F7562 		.ascii	"double\000"
+ 2336      6C6500
+ 2337              	.LASF26:
+ 2338 01e5 5375625F 		.ascii	"Sub_Buff\000"
+ 2338      42756666 
+ 2338      00
+ 2339              	.LASF12:
+ 2340 01ee 75696E74 		.ascii	"uint16\000"
+ 2340      313600
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 49
+
+
+ 2341              	.LASF8:
+ 2342 01f5 756E7369 		.ascii	"unsigned int\000"
+ 2342      676E6564 
+ 2342      20696E74 
+ 2342      00
+ 2343              	.LASF7:
+ 2344 0202 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2344      206C6F6E 
+ 2344      6720756E 
+ 2344      7369676E 
+ 2344      65642069 
+ 2345              	.LASF10:
+ 2346 0219 75696E74 		.ascii	"uint8_t\000"
+ 2346      385F7400 
+ 2347              	.LASF29:
+ 2348 0221 6861776B 		.ascii	"hawkeye_clk_Write\000"
+ 2348      6579655F 
+ 2348      636C6B5F 
+ 2348      57726974 
+ 2348      6500
+ 2349              	.LASF17:
+ 2350 0233 73697A65 		.ascii	"sizetype\000"
+ 2350      74797065 
+ 2350      00
+ 2351              	.LASF6:
+ 2352 023c 6C6F6E67 		.ascii	"long long int\000"
+ 2352      206C6F6E 
+ 2352      6720696E 
+ 2352      7400
+ 2353              	.LASF15:
+ 2354 024a 63686172 		.ascii	"char\000"
+ 2354      00
+ 2355              	.LASF2:
+ 2356 024f 73686F72 		.ascii	"short int\000"
+ 2356      7420696E 
+ 2356      7400
+ 2357              	.LASF23:
+ 2358 0259 43617053 		.ascii	"CapSense_sensorOnMask\000"
+ 2358      656E7365 
+ 2358      5F73656E 
+ 2358      736F724F 
+ 2358      6E4D6173 
+ 2359              	.LASF4:
+ 2360 026f 6C6F6E67 		.ascii	"long int\000"
+ 2360      20696E74 
+ 2360      00
+ 2361              	.LASF16:
+ 2362 0278 6C6F6E67 		.ascii	"long double\000"
+ 2362      20646F75 
+ 2362      626C6500 
+ 2363              	.LASF0:
+ 2364 0284 7369676E 		.ascii	"signed char\000"
+ 2364      65642063 
+ 2364      68617200 
+ 2365              	.LASF33:
+ 2366 0290 7265706F 		.ascii	"report_debug_data\000"
+ 2366      72745F64 
+ARM GAS  C:\Users\young\AppData\Local\Temp\cc47fNId.s 			page 50
+
+
+ 2366      65627567 
+ 2366      5F646174 
+ 2366      6100
+ 2367              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

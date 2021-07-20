@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files\main.c">
+<ExpandedNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Pins</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Analog</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Clocks</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Interrupts</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\System</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Directives</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Flash Security</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Header Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Header Files\header.h</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files\hawkeye.c</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files\main.c</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Pins</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Analog</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Clocks</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Interrupts</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\System</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Directives</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.cydwr\Flash Security</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Header Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Header Files\header.h</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files\hawkeye.c</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Source Files\main.c</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4\CapSense</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4\CapSense_SampleClk</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4\CapSense_SenseClk</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\Generated_Source\PSoC4\CapSense_Sns</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4000</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4000\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200 BLE</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200 BLE\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4000</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4000\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200 BLE</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\PSoC4\PSoC 4200 BLE\TopDesign.ctl</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_CSHL.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_INT.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_SampleClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_SenseClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_TunerHelper.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\hawkeye.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\hawkeye_clk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\hawkeye_data.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\isr_WDT.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Pin_Power.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Pin_Power_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\TC_CC_ISR.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_10.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_10_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_14.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_14_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_15.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_15_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_16.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_16_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_18.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_18_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_9.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\UnUsedPin_9_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\CapSense_CSD_P4_Example_WithTuner01.elf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\CapSense_CSD_P4_Example_WithTuner01.hex</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\CapSense_CSD_P4_Example_WithTuner01.map</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.gpdsc</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01.rpt</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_CSHL.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_INT.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_PM.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_SampleClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_SenseClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CapSense_TunerHelper.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\PSoC 4 Architecture TRM</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\PSoC 4000 Family Datasheet</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides\cy_boot_v5_60</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_v2_60.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_clock_v2_20.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_gsref_v2_10.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_isr_v1_70</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_10</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_20</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TCPWM_P4_v2_10.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\PSoC 4 Architecture TRM</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\PSoC 4000 Family Datasheet</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides\cy_boot_v5_60</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_v2_60.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_clock_v2_20.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_gsref_v2_10.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_isr_v1_70</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_10</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_10\cy_pins_v2_10.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_20</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CapSense_CSD_P4_Example_WithTuner01\CapSense_CSD_P4_Example_WithTuner01\TCPWM_P4_v2_10.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\main.c" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\CapSense_CSD_P4_Example_WithTuner01.cydwr" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\hawkeye.c" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\CapSense_CSHL.h" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\CapSense.h" />
+<name v=".\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\hawkeye_clk.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="753, 453" SelectedTabbedMdiWindow="ce74164e-0c80-4e4a-8e88-0bf02a55a890"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2a8b3d81-4909-4c56-8a17-4090f5851b74" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\main.c" Guid="e7b91381-89d3-42ac-84c0-d47df20554bd" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\TopDesign\TopDesign.cysch" Guid="9a7d5862-1b9e-48ed-bdc2-40fd59cbde45" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\CapSense_CSD_P4_Example_WithTuner01.cydwr" Guid="a0136174-dda0-4a79-b914-77efa236b6df" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\hawkeye.c" Guid="0884faba-5e22-498a-9480-56a12b32266f" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\CapSense_CSHL.h" Guid="91e2ca2d-2b0a-438a-b8db-23b0dccf9268" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\CapSense.h" Guid="9c9f2977-cddd-4795-aaae-1ca94baf54a3" /><DocumentWindow Key="C:\Users\Public\touch\(NowC302)A1_Global_Multi_Creator4.1_hawkeye\CapSense_CSD_P4_Example_WithTuner01.cydsn\Generated_Source\PSoC4\hawkeye_clk.c" Guid="ce74164e-0c80-4e4a-8e88-0bf02a55a890" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>
